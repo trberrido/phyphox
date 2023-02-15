@@ -1,0 +1,12 @@
+# comments below to allow cors policy
+# can be commented on prod
+Header set Access-Control-Allow-Origin *
+Header set Access-Control-Allow-Methods "GET, POST, PATCH, PUT, DELETE, OPTIONS"
+Header set Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, X-Auth-Token"
+Header set Access-Control-Allow-Credentials true
+
+# redirect to the front entry point 
+RewriteEngine On
+DirectoryIndex index.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.+)$ index.html? [QSA]

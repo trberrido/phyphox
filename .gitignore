@@ -1,0 +1,12 @@
+./api/data/private/scripts/*.json
+./api/data/public/app/*.json
+./api/data/public/configurations/*.json
+./api/data/public/experiments/*.json
+./api/data/public/input/*.json
+./api/data/public/pythoninput/*.json
+./api/data/public/pythonoutput/*.json
+./api/data/public/raw/*.json
+./api/data/public/schemas/input.json
+./api/data/public/scripts/*.py
+./api/data/public/scripts/*.py
+./api/data/public/user/1.json
