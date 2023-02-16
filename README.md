@@ -14,4 +14,4 @@ Simple upload via a FTP client.
 
 ## Front-end
 
-The front interface is a react bundle. You can clone and edit the sources here : [https://github.com/trberrido/phyphpx-front](https://github.com/trberrido/phyphpx-front)
+The front interface is a react bundle. You can clone and edit the sources here : [https://github.com/trberrido/phyphox-front](https://github.com/trberrido/phyphox-front)
