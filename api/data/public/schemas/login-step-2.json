@@ -1,0 +1,20 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "/api/schemas/login-step-1.json",
+	"type": "object",
+	"properties": {
+		"email": {
+			"description": "login address",
+			"type": "string",
+			"format": "email"
+		},
+		"password": {
+			"description": "4 chars alhpanumeric",
+			"type": "string",
+			"minLength": 4,
+			"maxLength": 4,
+			"pattern": "/^[0-9A-Z]+$/"
+		}
+	},
+	"required": ["email", "password"]
+}

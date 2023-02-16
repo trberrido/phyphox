@@ -1,0 +1,13 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "/api/schemas/login-step-1.json",
+	"type": "object",
+	"properties": {
+		"email": {
+			"description": "login address",
+			"type": "string",
+			"format": "email"
+		}
+	},
+	"required": ["email"]
+}

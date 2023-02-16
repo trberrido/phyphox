@@ -1,0 +1,87 @@
+{
+	"collections": {
+
+		"input": {
+			"methods": {
+				"POST": ["./methods/input/post.php"]
+			}
+		},
+
+		"pythonoutput": {
+			"methods": {
+				"GET": ["./methods/clear_old_ressources.php", "./methods/get.php"]
+			}
+		},
+
+		"pythoninput": {
+			"methods": {
+				"GET": ["./methods/clear_old_ressources.php", "./methods/get.php"]
+			}
+		},
+
+		"raw": {
+			"methods": {
+				"GET": ["./methods/clear_old_ressources.php", "./methods/get.php"],
+				"DELETE": ["./methods/raw/delete.php"]
+			}
+		},
+
+		"configurations" : {
+			"methods": {
+				"GET": ["./methods/get.php"],
+				"POST": [
+					"./methods/configurations/generate_schema.php",
+					"./methods/post.php"
+				],
+				"PUT": [
+					"./methods/configurations/generate_schema.php",
+					"./methods/put.php"
+				],
+				"DELETE": [
+					"./methods/configurations/delete_pyscript.php",
+					"./methods/delete.php"
+				]
+			}
+		},
+		
+		"python": {
+			"methods": {
+				"GET": ["./methods/python/get.php"]
+			}
+		},
+
+		"experiments": {
+			"methods": {
+				"GET": ["./methods/experiments/get.php", "./methods/get.php"],
+				"DELETE": ["./methods/delete.php"]
+			}
+		},
+	
+		"user": {
+			"methods": {
+				"POST": ["./methods/user/post.php"],
+				"PUT": ["./methods/user/put.php"],
+				"PATCH": ["./methods/patch.php"],
+				"GET": ["./methods/user/get.php"]
+			}
+		},
+
+		"app": {
+			"methods": {
+				"GET": ["./methods/get.php"],
+				"PUT": [
+					"./methods/app/validation.php",
+					"./methods/app/generate_pyscripts.php",
+					"./methods/put.php"
+				]
+			}
+		},
+
+		"schemas": {
+			"methods": {
+				"GET" : ["./methods/get.php"]
+			}
+		}
+		
+	}
+}

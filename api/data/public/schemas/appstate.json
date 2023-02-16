@@ -1,0 +1,20 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "/api/schemas/appstate.json",
+	"type": "object",
+	"properties": {
+		"isListening" : {
+			"description": "indicates if the app is open to receive data from phyphox smartphones app",
+			"type": "boolean"
+		},
+		"currentConfiguration": {
+			"description": "indicates the name of the configuration file reference to display data",
+			"type": "string"
+		},
+		"startedAt": {
+			"description": "used to differentiate several experience made from a common configurations",
+			"type": "number"
+		}
+	},
+	"required": ["isListening", "currentConfiguration", "startedAt"]
+}
