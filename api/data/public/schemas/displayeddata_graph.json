@@ -1,0 +1,24 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "/api/schemas/displayeddata_graph.json",
+	"type": "object",
+	"properties": {
+		"displayedData": {
+			"description": "the data used by the front to display a graph, an array of two elements : the measures, and the fits.",
+			"type": "array",
+			"items": {
+				"description":  "Each array contains a list of array, one per each fit, one per measure",
+				"type": "array",
+				"items": {
+					"description": "Each array contains two array : the first is a list of x coordinates, the second one a list of y ones.",
+					"type": "array",
+					"items": {
+						"description": "x or y coordinate",
+						"type": "number"
+					}
+				}
+			}
+		}
+	},
+	"required": ["displayedData"]
+}

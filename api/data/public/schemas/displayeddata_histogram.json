@@ -1,0 +1,15 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "/api/schemas/displayeddata_histogram.json",
+	"type": "object",
+	"properties": {
+		"displayedData": {
+			"description": "the data used by the front to display an histogram",
+			"type": "array",
+			"items": {
+				"type": "number"
+			}
+		}
+	},
+	"required": ["displayedData"]
+}

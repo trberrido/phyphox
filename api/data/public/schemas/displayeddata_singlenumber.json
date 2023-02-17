@@ -1,0 +1,12 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "/api/schemas/displayeddata_singlenumber.json",
+	"type": "object",
+	"properties": {
+		"displayedData": {
+			"description": "the data used by the front to display a single number",
+			"type": "number"
+		}
+	},
+	"required": ["displayedData"]
+}

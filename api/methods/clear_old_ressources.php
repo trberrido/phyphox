@@ -1,6 +1,6 @@
 <?php
 
-// erase output copy older than 1 day
+// erase output copy older than 1 hour
 $folder = DATA_PUBLIC_DIR . '/' . $request['collection'] . '/';
 $ressources = glob($folder . '*.{*}', GLOB_BRACE);
 $now = time();

@@ -1,5 +1,19 @@
 <?php
 
+// utility function : check if the displayedData is valid through a schema
+function displayeddata_match_schema($data, $type){
+
+	$schemas = [
+		'Single Number'	=> 'displayeddata_singlenumber',
+		'Histogram'		=> 'displayeddata_histogram',
+		'Graph'			=> 'displayeddata_graph'
+	];
+	$schema = json_decode(file_get_contents(DATA_PUBLIC_DIR . '/schemas/' . $schemas[$type]. '.json'), true);
+
+	return json_validate($data, $schema);
+		 
+}
+
 /*
 	GET experiments / current
 		if the app is open, GET produces every second a new set of data to be displayed
@@ -144,6 +158,8 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 									$experiment_data['visualizations'][$visualization_index]['displayedData'] = array_merge($experiment_data['visualizations'][$visualization_index]['displayedData'], $experiment_data['visualizations'][$visualization_index]['phyphoxData'][$phyphoxData_index]);
 									$phyphoxData_index += 1;
 								}
+
+								
 	
 								// default value of displayedData if single number = average(array_merge(displayedData))
 								if (strcmp($experiment_data['visualizations'][$visualization_index]['type'], 'Single Number') == 0){
@@ -151,12 +167,20 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 									$displayedData_length = count($experiment_data['visualizations'][$visualization_index]['displayedData']);
 									if ($displayedData_length){
 										$experiment_data['visualizations'][$visualization_index]['displayedData'] = array_sum($experiment_data['visualizations'][$visualization_index]['displayedData']) / $displayedData_length;
-									}
-									else
+									} else {
 										$experiment_data['visualizations'][$visualization_index]['displayedData'] = 0;
+									}
 								
 								}
-	
+
+								//	check if displayedData matches the schema
+								if (!displayeddata_match_schema(	// @data, @type
+									$experiment_data['visualizations'][$visualization_index],
+									$experiment_data['visualizations'][$visualization_index]['type']
+								)){
+									json_puterror(ERR_DATA_NOTMATCHING);
+								}
+
 							}
 						
 							/* 	
@@ -186,6 +210,14 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 								
 								//default value of displayedData if histogram = phyphoxData
 								$experiment_data['visualizations'][$visualization_index]['displayedData'] = $experiment_data['visualizations'][$visualization_index]['phyphoxData'][$phyphoxData_length];
+
+								// check if displayedData matches the schema
+								if (!displayeddata_match_schema(	// @data, @type
+									$experiment_data['visualizations'][$visualization_index],
+									$experiment_data['visualizations'][$visualization_index]['type']
+								)){
+									json_puterror(ERR_DATA_NOTMATCHING);
+								}
 
 							}
 							
@@ -232,11 +264,19 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 						
 						$experiment_data['visualizations'][$visualization_index]['displayedData'] = script_exec($script_filename, $data);
 						
+						//	check if displayedData matches the schema
+						if (!displayeddata_match_schema(	// @data, @type
+							$experiment_data['visualizations'][$visualization_index],
+							$experiment_data['visualizations'][$visualization_index]['type']
+						)){
+							json_puterror(ERR_DATA_NOTMATCHING);
+						}
+
 					} else {
 						json_puterror(ERR_PY);
 					}
 				}
-	
+
 				$visualization_index += 1;
 	
 			}

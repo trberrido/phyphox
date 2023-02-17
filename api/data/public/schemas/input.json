@@ -1,1 +1,1 @@
-{"$schema":"https:\/\/json-schema.org\/draft\/2020-12\/schema","$id":".\/data\/public\/schemas\/input.json","type":"object","properties":{"acc_time":{"type":"array","items":{"type":"number"}},"accZ":{"type":"array","items":{"type":"number"}}}}
+{"$schema":"https:\/\/json-schema.org\/draft\/2020-12\/schema","$id":".\/data\/public\/schemas\/input.json","type":"object","properties":{"accZ":{"type":"array","items":{"type":"number"}}}}

@@ -55,6 +55,5 @@ function json_put($content = true){
 }
 
 function json_puterror($content = false){
-	$status = false;
 	json_put(['error' => $content]);
 }
