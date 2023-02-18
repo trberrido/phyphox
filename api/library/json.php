@@ -22,7 +22,8 @@ function json_validate($data, $schema){
 		'string'	=> 'validate_string',
 		'number'	=> 'validate_number',
 		'boolean'	=> 'validate_boolean',
-		'array'		=> 'validate_array'
+		'array'		=> 'validate_array',
+		'any'		=> 'validate_any'
 	];
 
 	// check if required properties are present in data

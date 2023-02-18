@@ -7,7 +7,8 @@ function validate_array($data, $schema){
 		'string'	=> 'validate_string',
 		'number'	=> 'validate_number',
 		'boolean'	=> 'validate_boolean',
-		'array'		=> 'validate_array'
+		'array'		=> 'validate_array',
+		'any'		=> 'validate_any'
 	];
 
 	if (!is_array($data))

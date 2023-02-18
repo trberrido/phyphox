@@ -8,15 +8,7 @@
 			"type": "array",
 			"items": {
 				"description":  "Each array contains a list of array, one per each fit, one per measure",
-				"type": "array",
-				"items": {
-					"description": "Each array contains two array : the first is a list of x coordinates, the second one a list of y ones.",
-					"type": "array",
-					"items": {
-						"description": "x or y coordinate",
-						"type": "number"
-					}
-				}
+				"type": "any"
 			}
 		}
 	},
