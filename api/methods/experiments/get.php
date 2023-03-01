@@ -88,7 +88,7 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 	
 		/*
 	
-			first	: put the data from inputs into experiment.visualization.phyphoxData
+			first	: put the data from inputs to experiment.visualization.phyphoxData
 	
 				loop on each input.file older than 1 sec
 					loop on each input.property
@@ -181,11 +181,6 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 
 							}
 						
-							/* 	
-								a match has found, so
-								quit loop on $experiment_data['visualizations']
-								and go to next input property
-							*/
 							$experiment_data['visualizations'][$visualization_index]['contributions_total'] += 1;
 	
 						}
@@ -218,11 +213,6 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 
 							}
 							
-							/* 
-								a match has been found, so
-								quit loop on experiment.visualizations
-								and go to next input property
-							*/
 							$experiment_data['visualizations'][$visualization_index]['contributions_total'] += 1;
 	
 						}
