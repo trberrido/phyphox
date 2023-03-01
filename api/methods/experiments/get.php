@@ -130,13 +130,11 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 								$experiment_data['visualizations'][$visualization_index]['extravariables'][$input_data_key] = array();
 							
 							array_push($experiment_data['visualizations'][$visualization_index]['extravariables'][$input_data_key], $input_data_value);
-							
-							break ;
 
 						}
 
 						// Single number or Histogram (1 dimensional data)
-						if (isset($experiment_data['visualizations'][$visualization_index]['id'])
+						else if (isset($experiment_data['visualizations'][$visualization_index]['id'])
 							&& strcmp($input_data_key, $experiment_data['visualizations'][$visualization_index]['id']) == 0){
 													
 							// if present, remove useless lines data (relevant for graph only)
@@ -189,12 +187,11 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 								and go to next input property
 							*/
 							$experiment_data['visualizations'][$visualization_index]['contributions_total'] += 1;
-							break ; 
 	
 						}
 	
 						// Graph visualization (2 dimensional datas)
-						if ((isset($experiment_data['visualizations'][$visualization_index]['idx']) && strcmp($input_data_key, $experiment_data['visualizations'][$visualization_index]['idx']) == 0)
+						else if ((isset($experiment_data['visualizations'][$visualization_index]['idx']) && strcmp($input_data_key, $experiment_data['visualizations'][$visualization_index]['idx']) == 0)
 							|| (isset($experiment_data['visualizations'][$visualization_index]['idy']) && strcmp($input_data_key, $experiment_data['visualizations'][$visualization_index]['idy']) == 0)) {
 								
 							// Graph visualization confirmation
@@ -227,7 +224,6 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 								and go to next input property
 							*/
 							$experiment_data['visualizations'][$visualization_index]['contributions_total'] += 1;
-							break ; 
 	
 						}
 	
