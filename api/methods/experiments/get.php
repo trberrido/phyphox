@@ -157,8 +157,6 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 									$phyphoxData_index += 1;
 								}
 
-								
-	
 								// default value of displayedData if single number = average(array_merge(displayedData))
 								if (strcmp($experiment_data['visualizations'][$visualization_index]['type'], 'Single Number') == 0){
 
@@ -193,27 +191,54 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 							if (strcmp($experiment_data['visualizations'][$visualization_index]['type'], 'Graph') == 0){
 								
 								$phyphoxData_length = count($experiment_data['visualizations'][$visualization_index]['phyphoxData']);
-								$x = isset($experiment_data['visualizations'][$visualization_index]['phyphoxData'][$phyphoxData_length][ $experiment_data['visualizations'][$visualization_index]['idx'] ]) ? $experiment_data['visualizations'][$visualization_index]['phyphoxData'][$phyphoxData_length][ $experiment_data['visualizations'][$visualization_index]['idx'] ] : $input_data[ $experiment_data['visualizations'][$visualization_index]['idx'] ];
-								$y = isset($experiment_data['visualizations'][$visualization_index]['phyphoxData'][$phyphoxData_length][ $experiment_data['visualizations'][$visualization_index]['idy'] ]) ? $experiment_data['visualizations'][$visualization_index]['phyphoxData'][$phyphoxData_length][ $experiment_data['visualizations'][$visualization_index]['idy'] ] : $input_data[ $experiment_data['visualizations'][$visualization_index]['idy'] ];
+								$phyphoxData_last_index = $phyphoxData_length ? $phyphoxData_length - 1 : $phyphoxData_length;
 
-								$new_line = [ $x, $y ];
+								if (strcmp($input_data_key, $experiment_data['visualizations'][$visualization_index]['idx']) == 0){
 
-								$experiment_data['visualizations'][$visualization_index]['phyphoxData'][$phyphoxData_length] = $new_line;
-								
-								//default value of displayedData if histogram = phyphoxData
-								$experiment_data['visualizations'][$visualization_index]['displayedData'] = $experiment_data['visualizations'][$visualization_index]['phyphoxData'][$phyphoxData_length];
+									if (empty($experiment_data['visualizations'][$visualization_index]['phyphoxData']))
+										array_push($experiment_data['visualizations'][$visualization_index]['phyphoxData'], [ 'x' => $input_data_value ]);
+									else if (array_key_exists('x', $experiment_data['visualizations'][$visualization_index]['phyphoxData'][$phyphoxData_last_index]))
+										array_push($experiment_data['visualizations'][$visualization_index]['phyphoxData'], [ 'x' => $input_data_value ]); 
+									else 
+										$experiment_data['visualizations'][$visualization_index]['phyphoxData'][$phyphoxData_last_index]['x'] = $input_data_value;
 
-								// check if displayedData matches the schema
-								if (!displayeddata_match_schema(	// @data, @type
-									$experiment_data['visualizations'][$visualization_index],
-									$experiment_data['visualizations'][$visualization_index]['type']
-								)){
-									json_puterror(ERR_DATA_NOTMATCHING);
+								} else if (strcmp($input_data_key, $experiment_data['visualizations'][$visualization_index]['idy']) == 0){
+									
+									if (empty($experiment_data['visualizations'][$visualization_index]['phyphoxData']))
+										array_push($experiment_data['visualizations'][$visualization_index]['phyphoxData'], [ 'y' => $input_data_value ]);
+									else if (array_key_exists('y', $experiment_data['visualizations'][$visualization_index]['phyphoxData'][$phyphoxData_last_index]))
+										array_push($experiment_data['visualizations'][$visualization_index]['phyphoxData'], [ 'y' => $input_data_value ]); 
+									else 
+										$experiment_data['visualizations'][$visualization_index]['phyphoxData'][$phyphoxData_last_index]['y'] = $input_data_value;
+
 								}
 
+								// if x and y are set
+								// push to displayedData and incremnet total contributions counter
+								$phyphoxData_last_index = count($experiment_data['visualizations'][$visualization_index]['phyphoxData']) - 1;
+								if ($phyphoxData_last_index > -1
+									&& array_key_exists('x', $experiment_data['visualizations'][$visualization_index]['phyphoxData'][$phyphoxData_last_index])
+									&& array_key_exists('y', $experiment_data['visualizations'][$visualization_index]['phyphoxData'][$phyphoxData_last_index])){
+
+									if (!array_key_exists('measures', $experiment_data['visualizations'][$visualization_index]['displayedData'])){
+										$experiment_data['visualizations'][$visualization_index]['displayedData']['measures'] = [];
+										$experiment_data['visualizations'][$visualization_index]['displayedData']['fits'] = [];
+									}
+
+									array_push($experiment_data['visualizations'][$visualization_index]['displayedData']['measures'], $experiment_data['visualizations'][$visualization_index]['phyphoxData'][$phyphoxData_last_index]);
+
+									$experiment_data['visualizations'][$visualization_index]['contributions_total'] += 1;
+
+									if (!displayeddata_match_schema(	// @data, @type
+										$experiment_data['visualizations'][$visualization_index],
+										$experiment_data['visualizations'][$visualization_index]['type']
+									)){
+										json_puterror(ERR_DATA_NOTMATCHING);
+									}
+
+								}
+	
 							}
-							
-							$experiment_data['visualizations'][$visualization_index]['contributions_total'] += 1;
 	
 						}
 	
@@ -261,6 +286,7 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 					} else {
 						json_puterror(ERR_PY);
 					}
+					
 				}
 
 				$visualization_index += 1;

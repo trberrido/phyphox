@@ -4,12 +4,37 @@
 	"type": "object",
 	"properties": {
 		"displayedData": {
-			"description": "the data used by the front to display a graph, an array of two elements : the measures, and the fits.",
-			"type": "array",
-			"items": {
-				"description":  "Each array contains a list of array, one per each fit, one per measure",
-				"type": "any"
-			}
+			"description": "the data used by the front to display a graph, an object of two elements : the measures, and the fits.",
+			"type": "object",
+			"properties": {
+				"measures": {
+					"description": "an array containing every received data",
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"x": {
+								"type": "array",
+								"items": {
+									"type": "number"
+								}
+							},
+							"y": {
+								"type": "array",
+								"items": {
+									"type": "number"
+								}
+							}
+						},
+						"required": ["x", "y"]
+					}
+				},
+				"fits": {
+					"description": "an object that will contain the fits data",
+					"type": "any"
+				}
+			},
+			"required": ["measures", "fits"]
 		}
 	},
 	"required": ["displayedData"]
