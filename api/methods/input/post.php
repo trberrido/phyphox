@@ -8,6 +8,15 @@
 
 
 // for debug : save all the data received in raw/
+$folder = DATA_PUBLIC_DIR . '/raw/';
+$ressources = glob($folder . '*.{*}', GLOB_BRACE);
+$now = time();
+$timelimite = 60 * 60;
+foreach($ressources as $ressource){
+	if ($now - filemtime($ressource) >= $timelimite)
+		unlink($ressource);
+}
+
 $request['data'] = json_decode(file_get_contents('php://input'));
 $rawfilename = DATA_PUBLIC_DIR . '/raw/' . uniqid() . '.json';
 file_put_contents($rawfilename, json_encode($request['data']), LOCK_EX);
