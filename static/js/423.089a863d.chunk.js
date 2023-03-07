@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkphyphox_front=self.webpackChunkphyphox_front||[]).push([[423],{9934:function(e,n,t){t.r(n);var i=t(7689),r=t(9559),p=t(184);n.default=function(){var e=(0,i.UO)();return(0,p.jsx)(p.Fragment,{children:(0,p.jsx)(r.Z,{title:e.experimentID,isOnGoingExperiment:!1,fetchURL:"https://"+window.location.hostname+"/api/experiments/"+e.experimentID+".json"})})}}}]);
+//# sourceMappingURL=423.089a863d.chunk.js.map

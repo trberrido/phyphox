@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkphyphox_front=self.webpackChunkphyphox_front||[]).push([[673],{6114:function(e,n,t){t.r(n);var i=t(2791),r=t(2918),s=t(9559),o=t(184);n.default=function(){var e=(0,i.useContext)(r.zX).isAppListening;return(0,o.jsx)(o.Fragment,{children:(0,o.jsx)(s.Z,{title:e?"Ongoing experience, data collection in progress":"Last experiment",isOnGoingExperiment:e,fetchURL:"https://"+window.location.hostname+"/api/experiments/"+(e?"current":"last")})})}}}]);
+//# sourceMappingURL=673.d60e070f.chunk.js.map

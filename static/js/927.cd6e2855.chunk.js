@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkpypox_front=self.webpackChunkpypox_front||[]).push([[927],{5134:function(e,n,t){t.r(n);t(2791);var r=t(1087),a=t(5102),i=t(3653),o=t(184);n.default=function(){return(0,o.jsxs)(o.Fragment,{children:[(0,o.jsx)(a.D,{header:"Set up a new experience",content:"Create a project"}),(0,o.jsx)(r.rU,{className:"configuration__link",to:"/administration",children:"\u2190 Back to administration."}),(0,o.jsx)(i.Z,{method:"POST"})]})}}}]);
-//# sourceMappingURL=927.cd6e2855.chunk.js.map
