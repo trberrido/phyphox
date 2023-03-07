@@ -53,7 +53,7 @@ function script_exec($script_filename, $data){
 	if (!copy($output_filename, $outputcpy))
 		json_puterror(ERR_FILE_CPY);
 
-	$output = json_decode(file_get_contents($output_filename));
+	$output = json_decode(file_get_contents($output_filename), true);
 	
 	return $output;
 

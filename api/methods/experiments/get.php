@@ -283,6 +283,44 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 							json_puterror(ERR_DATA_NOTMATCHING);
 						}
 
+						// add extra controls for graph fits
+						if (strcmp($experiment_data['visualizations'][$visualization_index]['type'], 'Graph') == 0){
+							if (array_key_exists('fits', $experiment_data['visualizations'][$visualization_index]['displayedData'])){
+								foreach ($experiment_data['visualizations'][$visualization_index]['displayedData']['fits'] as $fit_key => $fit_value){
+									
+									// each fit should have to keys: x and y 
+									if (!array_key_exists('x', $fit_value) || !array_key_exists('y', $fit_value))
+										json_puterror(ERR_FITS_OUTPUT . 'x or y key missing inside fit ' . $fit_key);
+
+									
+									// each keys should be an array of number
+									if (!is_array($fit_value['x']) || !is_array($fit_value['x']))
+										json_puterror(ERR_FITS_OUTPUT . 'x or y key is not an array inside fit ' . $fit_key);
+									
+									foreach ($fit_value['x'] as $x){
+										if (!is_numeric($x))
+											json_puterror(ERR_FITS_OUTPUT . 'x should only contain numbers inside fit ' . $fit_key);
+									}
+
+									foreach ($fit_value['y'] as $y){
+										if (!is_numeric($y))
+										json_puterror(ERR_FITS_OUTPUT . 'y should only contain numbers inside fit ' . $fit_key);
+									}
+
+									// each key should have a correspondance with the lines
+									$has_correspondance = false;
+									foreach($experiment_data['visualizations'][$visualization_index]['lines'] as $line){
+										if (strcmp($line['idline'], $fit_key) == 0){
+											$has_correspondance = true;
+											break ;
+										}
+									}
+									if (!$has_correspondance)
+										json_puterror(ERR_FITS_OUTPUT . 'no matching line informations (for eg : color ?) for ' . $fit_key);
+								}
+							}
+						}
+
 					} else {
 						json_puterror(ERR_PY);
 					}

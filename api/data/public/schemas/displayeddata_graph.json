@@ -34,7 +34,7 @@
 					"type": "any"
 				}
 			},
-			"required": ["measures", "fits"]
+			"required": ["measures"]
 		}
 	},
 	"required": ["displayedData"]
