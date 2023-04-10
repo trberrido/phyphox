@@ -9,18 +9,19 @@ function api_getcollections(){
 	return ($api['collections']);
 }
 
-/* returns ressource's formated data */ 
+/* returns ressource's formated data */
 
 function api_getressourceinfo($file_path){
 	return [
 		'id'		=> pathinfo($file_path, PATHINFO_FILENAME),
+		'title'		=> json_decode(file_get_contents($file_path), true)['title'],
 		'date'		=> date('H:i:s d/m/Y', filemtime($file_path)),
 		'filename' 	=> basename($file_path),
 		'filesize' 	=> filesize($file_path)
-	]; 
+	];
 }
 
-/* 
+/*
 	takes a collection's name
 	returns the list of ressources data
 */
@@ -51,24 +52,24 @@ function api_getrequest(){
 	];
 
 	$collections_available = api_getcollections();
-	
+
 	$user_request = url_explode();
 	array_shift($user_request);
-	
+
 	if ($_SERVER['REQUEST_METHOD'])
 		$request['method'] = $_SERVER['REQUEST_METHOD'];
-	
+
 	if (count($user_request))
 		$request['collection'] = $user_request[0];
-	
+
 	if (count($user_request) > 1)
 		$request['ressource'] = $user_request[1];
-	
+
 	if (count($user_request) > 2)
 		$request['items'] = array_slice($user_request, 2);
 
 	$request['data'] = json_decode(file_get_contents('php://input'), true);
-	
+
 	return $request;
 
 }
