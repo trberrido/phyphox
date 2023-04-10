@@ -12,9 +12,6 @@ if (!user_isauthorized())
 if (!$request['collection'])
 	json_puterror(ERR_COLLECTION_INVALID);
 
-if (!$request['data'])
-	json_puterror(ERR_DATA_INVALID);
-	
 if ($request['ressource']){
 
 	/*
@@ -34,15 +31,18 @@ if ($request['ressource']){
 	json_put(api_getressourceinfo($filename_copy));
 
 } else {
-	
+
 	/*
 		Create a new ressource
 	*/
 
+	if (!$request['data'])
+		json_puterror(ERR_DATA_INVALID);
+
 	$request['data'] = file_get_contents('php://input');
 	if (!$request['data'] || !json_checkinput($request['data']))
 		json_puterror(ERR_DATA_INVALID);
-	
+
 	$request['data'] = json_decode($request['data'], true);
 	//$request['data']['title'] = filter_var(preg_replace('/\s+/', '', $request['data']['title']), FILTER_SANITIZE_STRING);
 	$project_id = uniqid() . '_' . str_sanitizestrict($request['data']['title']);
