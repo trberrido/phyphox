@@ -1,3 +1,5 @@
 #!/usr/bin/env python3
 import sys
-print(sys.version)
+import numpy
+
+print(sys.version + ' numpy version : ' + numpy.__version__)
