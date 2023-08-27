@@ -16,5 +16,5 @@ if (!$request['data'])
 $filename = DATA_PUBLIC_DIR . '/' .  $request['collection'] . '/' . $request['ressource'];
 if (!file_put_contents($filename, json_encode($request['data']), LOCK_EX))
 	json_puterror(ERR_FILE_CREATION);
-	
+
 json_put(api_getressourceinfo($filename));

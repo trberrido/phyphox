@@ -12,13 +12,19 @@ function api_getcollections(){
 /* returns ressource's formated data */
 
 function api_getressourceinfo($file_path){
-	return [
+
+	$ressourceinfos = [
 		'id'		=> pathinfo($file_path, PATHINFO_FILENAME),
-		'title'		=> json_decode(file_get_contents($file_path), true)['title'],
 		'date'		=> date('H:i:s d/m/Y', filemtime($file_path)),
 		'filename' 	=> basename($file_path),
 		'filesize' 	=> filesize($file_path)
 	];
+	$file = json_decode(file_get_contents($file_path), true);
+	if (array_key_exists('title', $file))
+		$ressourceinfos['title'] = $file['title'];
+
+	return $ressourceinfos;
+
 }
 
 /*

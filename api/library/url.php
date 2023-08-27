@@ -3,7 +3,7 @@
 /*
 	Filters URL request
 		removing all non alpha-numerical chars
-		if presents, removes site subfolder from URL 
+		if presents, removes site subfolder from URL
 	Returns an array of meaning parameters.
 */
 
@@ -27,10 +27,10 @@ function url_explode(){
 			json_puterror(ERR_URL_INVALID);
 		}
 	}
-	
+
 	if (!count($requests))
 		$requests = [''];
 
 	return $requests;
-	
+
 }

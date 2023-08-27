@@ -22,6 +22,7 @@ function user_exists(){
 }
 
 function user_isauthorized(){
+
 	if (isset($_COOKIE[COOKIE_KEY_TOKEN])){
 
 		$filename = DATA_PUBLIC_DIR . '/user/1.json';

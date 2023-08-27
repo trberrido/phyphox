@@ -1,1 +1,0 @@
-{"id":"63ed06b1a2d1e_Single_Number_example","title":"Single Number example","description":"This configuration displays a single number on screen.","visualizations":[{"title":"Visualization of a single number :","description":"Some comments.","type":"Single Number","pythonfile":{"name":null,"data":null,"extravariables":[]},"id":"frequency","unit":"MHz"}]}

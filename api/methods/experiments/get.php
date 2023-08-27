@@ -11,7 +11,7 @@ function displayeddata_match_schema($data, $type){
 	$schema = json_decode(file_get_contents(DATA_PUBLIC_DIR . '/schemas/' . $schemas[$type]. '.json'), true);
 
 	return json_validate($data, $schema);
-		 
+
 }
 
 /*
@@ -44,7 +44,7 @@ if (strcmp($request['ressource'], 'current') == 0 && !$is_applistening)
 
 // otherwise, if app is listening, gather data from data/inputs/{current_experiment} .json
 if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
-	
+
 	// Set $request['ressource'] so the generic GET method can handle it
 	$current_experiment_id = app_currentexperience();
 	$request['ressource'] = $current_experiment_id;
@@ -58,21 +58,21 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 		if (file_exists($experiment_filename)){
 
 			$experiment_data = json_decode(file_get_contents($experiment_filename), true);
-	
+
 		} else {
 
 			$current_configuration_id = app_currentconfiguration();
 			$configuration = json_decode(file_get_contents(DATA_PUBLIC_DIR . '/configurations/' . $current_configuration_id), true);
 			if (!$configuration)
 				json_puterror(ERR_RESSOURCE_INVALID);
-	
+
 			$experiment_data = [
 				'title'					=> $configuration['title'],
 				'description'			=> $configuration['description'],
 				'configurationid'		=> $current_experiment_id,
 				'visualizations'		=> array_values($configuration['visualizations'])
 			];
-	
+
 			$index = 0;
 			$length = count($experiment_data['visualizations']);
 			while ($index < $length){
@@ -83,52 +83,52 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 				unset($experiment_data['visualizations'][$index]['pythonfile']['data']);
 				$index += 1;
 			}
-		
+
 		}
-	
+
 		/*
-	
+
 			first	: put the data from inputs to experiment.visualization.phyphoxData
-	
+
 				loop on each input.file older than 1 sec
 					loop on each input.property
 						loop on each experiment.visualization
 							if a input.property matches a experiment.visualization.property
 							-	set experiment.visualization.property.phyphoxData = input.property
 							-	set default behavior for experiment.visualization.property.display
-	
+
 			then	: set experiment.visualization.displayedData
-	
+
 				loop on each configuration visualization
 					if python file is present
 						experiment.visualization.displayedData = python_script(visualization.phyphoxData)
-	
+
 		*/
-	
+
 		$inputs = glob(DATA_PUBLIC_DIR . '/input/*.json');
 		$now = time();
 		$timelimite = 1;
-	
+
 		foreach($inputs as $input){
-			
+
 			// filter only the inputs files older than 1 sec
 			if ($now - filemtime($input) >= $timelimite){
-				
+
 				// put each data from input in their corresponding visualizations
 				$input_data = json_decode(file_get_contents($input), true);
 				foreach ($input_data as $input_data_key => $input_data_value){
-	
+
 					// find matching data in visualization
 					$visualization_index = 0;
 					$visualizations_length = count($experiment_data['visualizations']);
 					while ($visualization_index < $visualizations_length){
-						
+
 						// look for extra variables
 						if (in_array($input_data_key, $experiment_data['visualizations'][$visualization_index]['pythonfile']['extravariables'])){
-							
+
 							if (!isset($experiment_data['visualizations'][$visualization_index]['extravariables'][$input_data_key]))
 								$experiment_data['visualizations'][$visualization_index]['extravariables'][$input_data_key] = array();
-							
+
 							array_push($experiment_data['visualizations'][$visualization_index]['extravariables'][$input_data_key], $input_data_value);
 
 						}
@@ -136,15 +136,15 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 						// Single number or Histogram (1 dimensional data)
 						else if (isset($experiment_data['visualizations'][$visualization_index]['id'])
 							&& strcmp($input_data_key, $experiment_data['visualizations'][$visualization_index]['id']) == 0){
-													
+
 							// if present, remove useless lines data (relevant for graph only)
 							if (isset($experiment_data['visualizations'][$visualization_index]['lines']))
 								unset($experiment_data['visualizations'][$visualization_index]['lines']);
-								
+
 							// add the new contribution from input
 							// into the experiment data 'phyphoxData'
 							array_push($experiment_data['visualizations'][$visualization_index]['phyphoxData'], $input_data_value);
-						
+
 							// if no python script, set default value for displayedData field
 							if (empty($experiment_data['visualizations'][$visualization_index]['pythonfile']['name'])){
 
@@ -166,7 +166,7 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 									} else {
 										$experiment_data['visualizations'][$visualization_index]['displayedData'] = 0;
 									}
-								
+
 								}
 
 								//	check if displayedData matches the schema
@@ -178,18 +178,18 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 								}
 
 							}
-						
+
 							$experiment_data['visualizations'][$visualization_index]['contributions_total'] += 1;
-	
+
 						}
-	
+
 						// Graph visualization (2 dimensional datas)
 						else if ((isset($experiment_data['visualizations'][$visualization_index]['idx']) && strcmp($input_data_key, $experiment_data['visualizations'][$visualization_index]['idx']) == 0)
 							|| (isset($experiment_data['visualizations'][$visualization_index]['idy']) && strcmp($input_data_key, $experiment_data['visualizations'][$visualization_index]['idy']) == 0)) {
-								
+
 							// Graph visualization confirmation
 							if (strcmp($experiment_data['visualizations'][$visualization_index]['type'], 'Graph') == 0){
-								
+
 								$phyphoxData_length = count($experiment_data['visualizations'][$visualization_index]['phyphoxData']);
 								$phyphoxData_last_index = $phyphoxData_length ? $phyphoxData_length - 1 : $phyphoxData_length;
 
@@ -199,16 +199,16 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 										array_push($experiment_data['visualizations'][$visualization_index]['phyphoxData'], [ 'x' => $input_data_value ]);
 									else if (array_key_exists('x', $experiment_data['visualizations'][$visualization_index]['phyphoxData'][$phyphoxData_last_index]))
 										array_push($experiment_data['visualizations'][$visualization_index]['phyphoxData'], [ 'x' => $input_data_value ]); 
-									else 
+									else
 										$experiment_data['visualizations'][$visualization_index]['phyphoxData'][$phyphoxData_last_index]['x'] = $input_data_value;
 
 								} else if (strcmp($input_data_key, $experiment_data['visualizations'][$visualization_index]['idy']) == 0){
-									
+
 									if (empty($experiment_data['visualizations'][$visualization_index]['phyphoxData']))
 										array_push($experiment_data['visualizations'][$visualization_index]['phyphoxData'], [ 'y' => $input_data_value ]);
 									else if (array_key_exists('y', $experiment_data['visualizations'][$visualization_index]['phyphoxData'][$phyphoxData_last_index]))
 										array_push($experiment_data['visualizations'][$visualization_index]['phyphoxData'], [ 'y' => $input_data_value ]); 
-									else 
+									else
 										$experiment_data['visualizations'][$visualization_index]['phyphoxData'][$phyphoxData_last_index]['y'] = $input_data_value;
 
 								}
@@ -237,44 +237,44 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 									}
 
 								}
-	
+
 							}
-	
+
 						}
-	
+
 						$visualization_index += 1;
-	
+
 					}
-	
+
 				}
-				
+
 				unlink($input);
-	
+
 			}
 		}
-		
+
 		if (count($inputs)){
 
 			$visualization_index = 0;
 			$visualizations_length = count($experiment_data['visualizations']);
-			while ($visualization_index < $visualizations_length){		
-					
+			while ($visualization_index < $visualizations_length){
+
 				// if a script python exist, execute it
 				// otherwise record the new value as it in the 'displayedData' field
 				if (!empty($experiment_data['visualizations'][$visualization_index]['pythonfile']['name'])
 					&& count($experiment_data['visualizations'][$visualization_index]['phyphoxData'])){
-	
+
 					$script_filename = script_getfilename($current_experiment_id, $visualization_index);
 					if (file_exists($script_filename)){
-	
+
 						// add extra variables if avalaible for python scripts
 						$data = ['phyphoxData' => $experiment_data['visualizations'][$visualization_index]['phyphoxData']];
 
 						if (!empty($experiment_data['visualizations'][$visualization_index]['extravariables']))
 							$data['extravariables'] =  $experiment_data['visualizations'][$visualization_index]['extravariables'];
-						
+
 						$experiment_data['visualizations'][$visualization_index]['displayedData'] = script_exec($script_filename, $data);
-						
+
 						//	check if displayedData matches the schema
 						if (!displayeddata_match_schema(	// @data, @type
 							$experiment_data['visualizations'][$visualization_index],
@@ -287,16 +287,16 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 						if (strcmp($experiment_data['visualizations'][$visualization_index]['type'], 'Graph') == 0){
 							if (array_key_exists('fits', $experiment_data['visualizations'][$visualization_index]['displayedData'])){
 								foreach ($experiment_data['visualizations'][$visualization_index]['displayedData']['fits'] as $fit_key => $fit_value){
-									
-									// each fit should have to keys: x and y 
+
+									// each fit should have to keys: x and y
 									if (!array_key_exists('x', $fit_value) || !array_key_exists('y', $fit_value))
 										json_puterror(ERR_FITS_OUTPUT . 'x or y key missing inside fit ' . $fit_key);
 
-									
+
 									// each keys should be an array of number
 									if (!is_array($fit_value['x']) || !is_array($fit_value['x']))
 										json_puterror(ERR_FITS_OUTPUT . 'x or y key is not an array inside fit ' . $fit_key);
-									
+
 									foreach ($fit_value['x'] as $x){
 										if (!is_numeric($x))
 											json_puterror(ERR_FITS_OUTPUT . 'x should only contain numbers inside fit ' . $fit_key);
@@ -324,18 +324,18 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 					} else {
 						json_puterror(ERR_PY);
 					}
-					
+
 				}
 
 				$visualization_index += 1;
-	
+
 			}
 
 		}
 
 		if (!file_put_contents($experiment_filename, json_encode($experiment_data), LOCK_EX))
 			json_puterror(ERR_FILE_CREATION);
-		
+
 
 	}
 

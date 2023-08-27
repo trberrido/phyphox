@@ -1,1 +1,0 @@
-"Traceback (most recent call last):\n  File \"\/var\/www\/pypox\/api\/.\/.\/data\/public\/scripts\/63ed0a5f3703e_Graph_example.json_0.py\", line 17, in <module>\n    'line1': [jsondata[0][0], list(map(double, jsondata[0][1]))],\nKeyError: 0\n"

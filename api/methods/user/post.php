@@ -10,7 +10,7 @@
 
 if (user_exists())
 	json_put(ERR_USER_ALREADYEXISTS);
-	
+
 $user = [
 	'email'		=> false,
 	'password'	=> '',
@@ -34,4 +34,5 @@ if (!file_put_contents($user_filepath, json_encode($user), LOCK_EX))
 
 if (!mail($user['email'], 'Your Phyphox code', 'Your code is : ' . $password, 'From: phyphox@' . $_SERVER['SERVER_NAME']))
 	json_puterror(ERR_EMAIL_NOTSENT);
+
 json_put(true);
