@@ -16,9 +16,15 @@ Phyphox is a free and opensource smartphone application that allows you to use t
 
 ## Installation
 
-Simple upload via a FTP client.
+1. Download the project from GitHub.
 
-  
+2. The file `api/data\private\config.json` must be addapted to your installation. Open it with a text editor, and update the `directory` field. It is a string that contains the name of the directory of your server you will instal the app. If you install the app directly on the root of your server, leave the field empty.
+
+3. Upload the app on your server, in the directory that is defined in the `config.json` file.
+
+4. Change the permission to 777 (read, write, and execute) to the directory `api\data\public\` and all files and subdirectories inside.
+
+The installation is completed. To test it, access your server directory through a web browser. The web page should complain about a syntax error (because there are nothing to display yet). Go to the admininistration page (click on the menu icon, top left, and chose "administration"). The first time you access this page, you will be asked to create a new user. See below on how to setup the web app.
 
 ## Front-end
 
@@ -32,7 +38,7 @@ The front interface is a react bundle. You can clone and edit the sources here :
 
 1. Install the web app on a server.
 
-2. Login. The first time you log in, you can enter any email address, and a code will be sent to this address. The following times you want to log in, you must give the exact same email address, and a new code will be sent each time. There can only be one email address: once the first contact is made, it can not be easily changed. If different persons plan to use the same server, consider using a generic email rather than a personal one, such as those provide by yopmail for example. Note that after a while the system will disconnect you automatically and you will need to relogin.
+2. Login (click on the menu icon, top left, and chose "administration"). The first time you log in, you must enter an email address, and a code will be sent to this address. The following times you want to log in, you must give the exact same email address, and a new code will be sent each time. There can only be one email address: once the first contact is made, it can not be easily changed. If different persons plan to use the same server, consider using a generic email rather than a personal one, such as those provide by yopmail for example. Note that after a while the system will disconnect you automatically and you will need to relogin.
 
 3. Go to the menu and choose Administration. Create your configuration (See more further down). Save and run.
 
@@ -433,3 +439,7 @@ The last python output: what was output by the python script (`sys.argv[2]` in t
 ## Front-end
 
 The front interface is a react bundle. You can clone and edit the sources here: [https://github.com/trberrido/phyphox-front](https://github.com/trberrido/phyphox-front)
+
+
+## How to change the user without reinstalling the web app
+Edit the file `api\data\public\user\1.json`.
