@@ -22,7 +22,7 @@ Phyphox is a free and opensource smartphone application that allows you to use t
 
 3. Upload the app on your server, in the directory that is defined in the `config.json` file.
 
-4. Change the permission to 777 (read, write, and execute) to the directory `api\data\public\` and all files and subdirectories inside.
+4. Change the permission to 777 (read, write, and execute) to the directory `api\data\public\` and all files and subdirectories inside. Change the permission to 777 to the directory `api/data/private/scripts`.
 
 The installation is completed. To test it, access your server directory through a web browser. The web page should complain about a syntax error (because there are nothing to display yet). Go to the admininistration page (click on the menu icon, top left, and chose "administration"). The first time you access this page, you will be asked to create a new user. See below on how to setup the web app.
 
