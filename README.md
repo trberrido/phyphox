@@ -411,6 +411,9 @@ the current experiment running on the server
 https://www.mySite.com/myAddress/api/configurations
 all the configurations saved on the server
 
+https://www.mySite.com/myAddress/api/configurations/theFileNameOfMyConfiguration.json
+The JSON file that contains the parameters of the configuration.
+
 https://www.mySite.com/myAddress/api/raw
 all the data received from the phyphox experiments, whether a configuration is running or not. The list is purged after a while.
 
@@ -442,4 +445,4 @@ The front interface is a react bundle. You can clone and edit the sources here: 
 
 
 ## How to change the user without reinstalling the web app
-Edit the file `api\data\public\user\1.json`.
+Delete the file `api\data\public\user\1.json`.
