@@ -67,7 +67,7 @@ if (isset($request['data']['email']) && isset($request['data']['password'])){
 	$user__on_hold['email'] = $user_registered['email'];
 	file_put_contents($user__registered__filename, json_encode($user__on_hold));
 	unlink($user__on_hold__filename);
-	header('Set-Cookie: ' . COOKIE_KEY_TOKEN . '=' . $user__on_hold['token'] . '; path=/; domain=' . $_SERVER['SERVER_NAME'] . '; Max-Age=10800; Secure; HttpOnly; SameSite=None;');
+	header('Set-Cookie: ' . COOKIE_KEY_TOKEN . '=' . $user__on_hold['token'] . '; path=/; domain=' . $_SERVER['SERVER_NAME'] . '; Max-Age=' . COOKIE_MAX_AGE . '; Secure; HttpOnly; SameSite=None;');
 	json_put(true);
 
 }
@@ -82,7 +82,7 @@ if (user_isauthorized()){
 	$user_registered['token'] =  uniqid();
 	$user_registered['signature'] = '';
 	file_put_contents($user__registered__filename, json_encode($user_registered));
-	header('Set-Cookie: ' . COOKIE_KEY_TOKEN . '=____;  path=/; domain=' . $_SERVER['SERVER_NAME'] . '; Max-Age=10800; Secure; HttpOnly; SameSite=None;');
+	header('Set-Cookie: ' . COOKIE_KEY_TOKEN . '=____;  path=/; domain=' . $_SERVER['SERVER_NAME'] . '; Max-Age=' . COOKIE_MAX_AGE . '; Secure; HttpOnly; SameSite=None;');
 	json_put(true);
 
 }

@@ -28,9 +28,10 @@ function user_isauthorized(){
 		$filename = DATA_PUBLIC_DIR . '/user/1.json';
 		if (!file_exists($filename))
 			return false;
-		$user_config = json_decode(file_get_contents($filename), true);			
+		$user_config = json_decode(file_get_contents($filename), true);
 		if ($_COOKIE[COOKIE_KEY_TOKEN] == $user_config['token']
 			&& user_hashsignature() == $user_config['signature']){
+				header('Set-Cookie: ' . COOKIE_KEY_TOKEN . '=' . $user_config['token'] . '; path=/; domain=' . $_SERVER['SERVER_NAME'] . '; Max-Age=' . COOKIE_MAX_AGE . '; Secure; HttpOnly; SameSite=None;');
 				return true;
 		}
 

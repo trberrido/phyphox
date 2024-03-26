@@ -4,6 +4,7 @@ const DATA_PUBLIC_DIR	= './data/public';
 const DATA_PRIVATE_DIR	= './data/private';
 
 const COOKIE_KEY_TOKEN = 'phyphox';
+const COOKIE_MAX_AGE = 43200;
 
 const SIG_CLOSING				= 'closing';
 const APPSTATE_ISCLOSED			= false;
