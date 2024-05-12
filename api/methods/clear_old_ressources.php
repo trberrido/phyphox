@@ -4,7 +4,7 @@
 $folder = DATA_PUBLIC_DIR . '/' . $request['collection'] . '/';
 $ressources = glob($folder . '*.{*}', GLOB_BRACE);
 $now = time();
-$timelimite = 60 * 60;
+$timelimite = 60 * 60 * 24 * 7;
 foreach($ressources as $ressource){
 	if ($now - filemtime($ressource) >= $timelimite)
 		unlink($ressource);
