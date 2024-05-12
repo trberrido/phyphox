@@ -1,1 +1,0 @@
-{"$schema":"https:\/\/json-schema.org\/draft\/2020-12\/schema","$id":".\/data\/public\/schemas\/input.json","type":"object","properties":{"x":{"type":"array","items":{"type":"number"}},"y":{"type":"array","items":{"type":"number"}}}}
