@@ -19,11 +19,11 @@ function json__validate($data, $schema){
 	// the below functions are in ./json__validate
 	$types = [
 		'object'	=> 'json__validate',
-		'string'	=> 'validate_string',
-		'number'	=> 'validate_number',
-		'boolean'	=> 'validate_boolean',
-		'array'		=> 'validate_array',
-		'any'		=> 'validate_any'
+		'string'	=> 'json__validate_string',
+		'number'	=> 'json__validate_number',
+		'boolean'	=> 'json__validate_boolean',
+		'array'		=> 'json__validate_array',
+		'any'		=> 'json__validate_any'
 	];
 
 	// check if required properties are present in data

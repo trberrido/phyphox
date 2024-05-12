@@ -14,7 +14,8 @@ $input_data = json_decode($input_data, true);
 $project_id = uniqid();
 $input_data['id'] = $project_id;
 $filename = DATA_PUBLIC_DIR . '/' .  $request['collection'] . '/' . $project_id . '.json';
+
 if (!file_put_contents($filename, json_encode($input_data), LOCK_EX))
 	json__puterror(ERR_FILE_CREATION);
-json__put(api__get_ressource_info($filename));
 
+json__put(api__get_ressource_info($filename));

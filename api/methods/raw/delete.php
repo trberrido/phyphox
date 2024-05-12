@@ -9,7 +9,7 @@ $folder = DATA_PUBLIC_DIR . '/' . $request['collection'] . '/';
 
 if (strcmp($request['ressource'], 'all') == 0){
 	$ressources = glob($folder . '*.{*}', GLOB_BRACE);
-	
+
 	if (!count($ressources))
 		json__puterror(ERR_RESSOURCE_INVALID);
 

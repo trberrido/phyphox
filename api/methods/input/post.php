@@ -33,5 +33,5 @@ $filename = DATA_PUBLIC_DIR . '/' .  $request['collection'] . '/' . $project_id 
 
 if (!file_put_contents($filename, json_encode($request['data']), LOCK_EX))
 	json__puterror(ERR_FILE_CREATION);
-	
+
 json__put(APPSTATE_ISOPEN);

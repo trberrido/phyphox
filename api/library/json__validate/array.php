@@ -1,14 +1,14 @@
 <?php
 
-function validate_array($data, $schema){
+function json__validate_array($data, $schema){
 
 	$types = [
 		'object'	=> 'json__validate',
-		'string'	=> 'validate_string',
-		'number'	=> 'validate_number',
-		'boolean'	=> 'validate_boolean',
-		'array'		=> 'validate_array',
-		'any'		=> 'validate_any'
+		'string'	=> 'json__validate_string',
+		'number'	=> 'json__validate_number',
+		'boolean'	=> 'json__validate_boolean',
+		'array'		=> 'json__validate_array',
+		'any'		=> 'json__validate_any'
 	];
 
 	if (!is_array($data))
@@ -29,7 +29,7 @@ function validate_array($data, $schema){
 		}
 
 	}
-	
+
 	return true;
 
 }
