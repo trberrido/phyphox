@@ -19,17 +19,17 @@ function script_getfilename($experiment_id, $visualization_index){
 function script_exec($script_filename, $data){
 
 	// erase all input / output previous files
-	$folder = DATA_PRIVATE_DIR . '/scripts/';
-	$files = glob($folder . '*.{*}', GLOB_BRACE);
+	$folder = DATA_PUBLIC_DIR . '/scripts/';
+	$files = glob($folder . '*.json');
 	foreach($files as $file){
 		unlink($file);
 	}
 
 	// the script will be laumched as `./script.py input.json output.json 2>&1`
 	$id = uniqid();
-	$input_filename = DATA_PRIVATE_DIR . '/scripts/' . $id . '_input.json';
-	$output_filename = DATA_PRIVATE_DIR . '/scripts/' . $id . '_output.json';
-	$stderr = DATA_PRIVATE_DIR . '/scripts/' . $id . '_error.json';
+	$input_filename = DATA_PUBLIC_DIR . '/scripts/' . $id . '_input.json';
+	$output_filename = DATA_PUBLIC_DIR . '/scripts/' . $id . '_output.json';
+	$stderr = DATA_PUBLIC_DIR . '/scripts/' . $id . '_error.json';
 	$outputcpy = DATA_PUBLIC_DIR . '/pythonoutput/' . $id . '.json';
 	$inputcpy = DATA_PUBLIC_DIR . '/pythoninput/' . $id . '.json';
 

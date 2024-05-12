@@ -21,6 +21,7 @@ const ERR_RESSOURCE_INVALID		= 'Ressource doesn\'t exists.';
 const ERR_FIELD_INVALID			= 'Unvalid field.';
 const ERR_FILE_CREATION			= 'Unable to create file';
 const ERR_FILE_CPY				= 'Unable to make a copy';
+const ERR_FILE_EDIT				= 'Unable to edit file';
 const ERR_DATA_INVALID			= 'The received datas are not accepted.';
 const ERR_DATA_NOTMATCHING		= 'displayedData doesn\'t match with the type.';
 const ERR_FITS_OUTPUT			= 'Python output, fits don\'t meet requirements : ';

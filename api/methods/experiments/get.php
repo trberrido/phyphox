@@ -8,7 +8,7 @@ function displayeddata_match_schema($data, $type){
 		'Histogram'		=> 'displayeddata_histogram',
 		'Graph'			=> 'displayeddata_graph'
 	];
-	$schema = json_decode(file_get_contents(DATA_PUBLIC_DIR . '/schemas/' . $schemas[$type]. '.json'), true);
+	$schema = json_decode(file_get_contents(DATA_PRIVATE_DIR . '/schemas/' . $schemas[$type]. '.json'), true);
 
 	return json_validate($data, $schema);
 

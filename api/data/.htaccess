@@ -1,0 +1,12 @@
+# Uncomment lines below to allow local dev
+# Header set Access-Control-Allow-Origin "http://localhost:3000"
+# Header set Access-Control-Allow-Methods "GET, POST, PATCH, PUT, DELETE, OPTIONS"
+# Header set Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, X-Auth-Token"
+# Header set Access-Control-Allow-Credentials true
+
+# Redirect all requests to the entry point api.php
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+DirectoryIndex api.php
+RewriteRule ^(.+)$ api.php [QSA,L]

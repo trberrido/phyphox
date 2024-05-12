@@ -14,12 +14,11 @@ if (!$request['ressource'] && strcmp($request['ressource'], '0') != 0){
 
 	$folder = DATA_PUBLIC_DIR . '/' . $request['collection'] . '/';
 	$file_path =  $folder . $request['ressource'];
-	
+
 	if (strcmp($request['ressource'], 'last') == 0
 		|| strcmp($request['ressource'], '0') == 0
 		|| is_numeric($request['ressource'])){
 
-		
 		$index = 0;
 		if (is_numeric($request['ressource']))
 			$index = $request['ressource'] + 0;
@@ -29,10 +28,10 @@ if (!$request['ressource'] && strcmp($request['ressource'], '0') != 0){
 			json_puterror(ERR_RESSOURCE_INVALID);
 		$file_path = $ressources[$index];
 	}
-	
+
 	if (!file_exists($file_path))
 		json_puterror(ERR_RESSOURCE_INVALID);
-	
+
 	$ressource = json_decode(file_get_contents($file_path), true);
 
 	if ($request['items']){

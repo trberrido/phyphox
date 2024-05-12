@@ -15,7 +15,7 @@ foreach (glob('library/json_validate/*.php') as $php_file)
 	include_once $php_file;
 
 function json_validate($data, $schema){
-	
+
 	// the below functions are in ./json_validate
 	$types = [
 		'object'	=> 'json_validate',
@@ -35,7 +35,7 @@ function json_validate($data, $schema){
 	}
 
 	// check if data
-	//		- is present in the schema 
+	//		- is present in the schema
 	//		- applies to the indicated type in schema
 	foreach ($data as $key => $value){
 		if (!array_key_exists($key, $schema['properties']))

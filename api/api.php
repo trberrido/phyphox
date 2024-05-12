@@ -11,6 +11,9 @@
 foreach (glob('library/*.php') as $php_file)
 	include_once $php_file;
 
+if (!api_initpublicfolder())
+	json_puterror(ERR_FILE_CREATION);
+
 $api = json_decode(file_get_contents(DATA_PRIVATE_DIR . '/api.json'), true);
 $request = api_getrequest();
 

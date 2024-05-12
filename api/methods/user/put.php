@@ -24,7 +24,7 @@ $user__on_hold = array();
 
 if (isset($request['data']['email']) && !(isset($request['data']['password']))){
 
-	$schema = json_decode(file_get_contents(DATA_PUBLIC_DIR . '/schemas/login-step-1.json'), true);
+	$schema = json_decode(file_get_contents(DATA_PRIVATE_DIR . '/schemas/login-step-1.json'), true);
 	if (!json_validate($request['data'], $schema))
 		json_puterror(ERR_DATA_INVALID);
 
@@ -49,7 +49,7 @@ if (isset($request['data']['email']) && !(isset($request['data']['password']))){
 
 if (isset($request['data']['email']) && isset($request['data']['password'])){
 
-	$schema = json_decode(file_get_contents(DATA_PUBLIC_DIR . '/schemas/login-step-2.json'), true);
+	$schema = json_decode(file_get_contents(DATA_PRIVATE_DIR . '/schemas/login-step-2.json'), true);
 	if (!json_validate($request['data'], $schema))
 		json_puterror(ERR_DATA_INVALID);
 
@@ -65,7 +65,9 @@ if (isset($request['data']['email']) && isset($request['data']['password'])){
 
 	$user__on_hold['token'] = uniqid();
 	$user__on_hold['email'] = $user_registered['email'];
-	file_put_contents($user__registered__filename, json_encode($user__on_hold));
+	if (file_put_contents($user__registered__filename, json_encode($user__on_hold)) === false)
+		json_puterror(ERR_FILE_EDIT);
+
 	unlink($user__on_hold__filename);
 	header('Set-Cookie: ' . COOKIE_KEY_TOKEN . '=' . $user__on_hold['token'] . '; path=/; domain=' . $_SERVER['SERVER_NAME'] . '; Max-Age=' . COOKIE_MAX_AGE . '; Secure; HttpOnly; SameSite=None;');
 	json_put(true);

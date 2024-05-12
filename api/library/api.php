@@ -82,3 +82,16 @@ function api_getrequest(){
 	return $request;
 
 }
+
+function api_initpublicfolder(){
+	if (file_exists(DATA_PUBLIC_DIR))
+		return true;
+	if (!mkdir(DATA_PUBLIC_DIR))
+		return false;
+	$folders = json_decode(file_get_contents(DATA_PRIVATE_DIR . '/api.json'), true);
+	foreach ($folders['collections'] as $folder_name => $methods){
+		if (!mkdir(DATA_PUBLIC_DIR . '/' . $folder_name))
+			return false;
+	}
+	return true;
+}

@@ -18,7 +18,7 @@ $user = [
 	'signature'	=> ''
 ];
 
-$schema = json_decode(file_get_contents(DATA_PUBLIC_DIR . '/schemas/login-step-1.json'), true);
+$schema = json_decode(file_get_contents(DATA_PRIVATE_DIR . '/schemas/login-step-1.json'), true);
 if (!json_validate($request['data'], $schema))
 	json_puterror(ERR_DATA_INVALID);
 
