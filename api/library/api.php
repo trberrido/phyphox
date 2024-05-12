@@ -19,7 +19,11 @@ function api_getressourceinfo($file_path){
 		'filename' 	=> basename($file_path),
 		'filesize' 	=> filesize($file_path)
 	];
+
 	$file = json_decode(file_get_contents($file_path), true);
+	if ($file === null)
+		json_puterror('The following file contains an error and must be removed: ' . basename($file_path));
+
 	if (array_key_exists('title', $file))
 		$ressourceinfos['title'] = $file['title'];
 
@@ -60,7 +64,6 @@ function api_getrequest(){
 	$collections_available = api_getcollections();
 
 	$user_request = url_explode();
-	array_shift($user_request);
 
 	if ($_SERVER['REQUEST_METHOD'])
 		$request['method'] = $_SERVER['REQUEST_METHOD'];
