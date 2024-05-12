@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkphyphox_front=self.webpackChunkphyphox_front||[]).push([[249],{12:(e,n,t)=>{t.r(n),t.d(n,{default:()=>i});var r=t(216),p=t(175),s=t(579);const i=()=>{const e=(0,r.g)();return(0,s.jsx)(s.Fragment,{children:(0,s.jsx)(p.A,{title:e.experimentID,isOnGoingExperiment:!1,fetchURL:window.API+"/api/experiments/"+e.experimentID+".json"})})}}}]);
+//# sourceMappingURL=249.974cfafa.chunk.js.map
