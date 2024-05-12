@@ -10,7 +10,7 @@ function displayeddata_match_schema($data, $type){
 	];
 	$schema = json_decode(file_get_contents(DATA_PRIVATE_DIR . '/schemas/' . $schemas[$type]. '.json'), true);
 
-	return json_validate($data, $schema);
+	return json__validate($data, $schema);
 
 }
 
@@ -38,19 +38,19 @@ function displayeddata_match_schema($data, $type){
 */
 
 // if the app is not listening for data anymore, send a closing signal
-$is_applistening = app_islistening();
+$is_applistening = app__is_listening();
 if (strcmp($request['ressource'], 'current') == 0 && !$is_applistening)
-	json_put(SIG_CLOSING);
+	json__put(SIG_CLOSING);
 
 // otherwise, if app is listening, gather data from data/inputs/{current_experiment} .json
 if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 
 	// Set $request['ressource'] so the generic GET method can handle it
-	$current_experiment_id = app_currentexperience();
+	$current_experiment_id = app__get_current_experience();
 	$request['ressource'] = $current_experiment_id;
 
 	// only the admin can update the experiment's displayedData. Regular viewers can only ask for processed displayedData
-	if (user_isauthorized()){
+	if (user__is_authorized()){
 
 		// reopen already filled experiment file if exists
 		// otherwise, build a first one based on data/configurations/{current_configuration}.json
@@ -61,10 +61,10 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 
 		} else {
 
-			$current_configuration_id = app_currentconfiguration();
+			$current_configuration_id = app__get_current_configuration();
 			$configuration = json_decode(file_get_contents(DATA_PUBLIC_DIR . '/configurations/' . $current_configuration_id), true);
 			if (!$configuration)
-				json_puterror(ERR_RESSOURCE_INVALID);
+				json__puterror(ERR_RESSOURCE_INVALID);
 
 			$experiment_data = [
 				'title'					=> $configuration['title'],
@@ -174,7 +174,7 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 									$experiment_data['visualizations'][$visualization_index],
 									$experiment_data['visualizations'][$visualization_index]['type']
 								)){
-									json_puterror(ERR_DATA_NOTMATCHING);
+									json__puterror(ERR_DATA_NOTMATCHING);
 								}
 
 							}
@@ -233,7 +233,7 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 										$experiment_data['visualizations'][$visualization_index],
 										$experiment_data['visualizations'][$visualization_index]['type']
 									)){
-										json_puterror(ERR_DATA_NOTMATCHING);
+										json__puterror(ERR_DATA_NOTMATCHING);
 									}
 
 								}
@@ -264,7 +264,7 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 				if (!empty($experiment_data['visualizations'][$visualization_index]['pythonfile']['name'])
 					&& count($experiment_data['visualizations'][$visualization_index]['phyphoxData'])){
 
-					$script_filename = script_getfilename($current_experiment_id, $visualization_index);
+					$script_filename = script__get_filename($current_experiment_id, $visualization_index);
 					if (file_exists($script_filename)){
 
 						// add extra variables if avalaible for python scripts
@@ -273,14 +273,14 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 						if (!empty($experiment_data['visualizations'][$visualization_index]['extravariables']))
 							$data['extravariables'] =  $experiment_data['visualizations'][$visualization_index]['extravariables'];
 
-						$experiment_data['visualizations'][$visualization_index]['displayedData'] = script_exec($script_filename, $data);
+						$experiment_data['visualizations'][$visualization_index]['displayedData'] = script__exec($script_filename, $data);
 
 						//	check if displayedData matches the schema
 						if (!displayeddata_match_schema(	// @data, @type
 							$experiment_data['visualizations'][$visualization_index],
 							$experiment_data['visualizations'][$visualization_index]['type']
 						)){
-							json_puterror(ERR_DATA_NOTMATCHING);
+							json__puterror(ERR_DATA_NOTMATCHING);
 						}
 
 						// add extra controls for graph fits
@@ -290,21 +290,21 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 
 									// each fit should have to keys: x and y
 									if (!array_key_exists('x', $fit_value) || !array_key_exists('y', $fit_value))
-										json_puterror(ERR_FITS_OUTPUT . 'x or y key missing inside fit ' . $fit_key);
+										json__puterror(ERR_FITS_OUTPUT . 'x or y key missing inside fit ' . $fit_key);
 
 
 									// each keys should be an array of number
 									if (!is_array($fit_value['x']) || !is_array($fit_value['x']))
-										json_puterror(ERR_FITS_OUTPUT . 'x or y key is not an array inside fit ' . $fit_key);
+										json__puterror(ERR_FITS_OUTPUT . 'x or y key is not an array inside fit ' . $fit_key);
 
 									foreach ($fit_value['x'] as $x){
 										if (!is_numeric($x))
-											json_puterror(ERR_FITS_OUTPUT . 'x should only contain numbers inside fit ' . $fit_key);
+											json__puterror(ERR_FITS_OUTPUT . 'x should only contain numbers inside fit ' . $fit_key);
 									}
 
 									foreach ($fit_value['y'] as $y){
 										if (!is_numeric($y))
-										json_puterror(ERR_FITS_OUTPUT . 'y should only contain numbers inside fit ' . $fit_key);
+										json__puterror(ERR_FITS_OUTPUT . 'y should only contain numbers inside fit ' . $fit_key);
 									}
 
 									// each key should have a correspondance with the lines
@@ -316,13 +316,13 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 										}
 									}
 									if (!$has_correspondance)
-										json_puterror(ERR_FITS_OUTPUT . 'no matching line informations (for eg : color ?) for ' . $fit_key);
+										json__puterror(ERR_FITS_OUTPUT . 'no matching line informations (for eg : color ?) for ' . $fit_key);
 								}
 							}
 						}
 
 					} else {
-						json_puterror(ERR_PY);
+						json__puterror(ERR_PY);
 					}
 
 				}
@@ -334,7 +334,7 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 		}
 
 		if (!file_put_contents($experiment_filename, json_encode($experiment_data), LOCK_EX))
-			json_puterror(ERR_FILE_CREATION);
+			json__puterror(ERR_FILE_CREATION);
 
 
 	}

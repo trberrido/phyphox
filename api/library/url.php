@@ -15,15 +15,15 @@
 	]
 */
 
-function url_explode(){
+function url__parse(){
 
 	$url = trim($_SERVER['REQUEST_URI'], "/");
 	$requests = explode('/', $url);
-	$requests = array_map(function($str) { return str_sanitizestrict($str); }, $requests);
+	$requests = array_map(function($str) { return str__sanitize_strict($str); }, $requests);
 
 	$last_apidir_position = array_search('api', array_reverse($requests, true));
 	if ($last_apidir_position === false)
-		json_puterror(ERR_URL_INVALID);
+		json__puterror(ERR_URL_INVALID);
 
 	$requests = array_slice($requests, $last_apidir_position + 1);
 

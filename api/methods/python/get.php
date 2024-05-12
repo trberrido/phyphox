@@ -33,4 +33,4 @@ if ($py3_output){
 	];
 }
 
-json_put($informations);
+json__put($informations);

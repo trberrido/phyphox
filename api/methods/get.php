@@ -8,7 +8,7 @@
 
 if (!$request['ressource'] && strcmp($request['ressource'], '0') != 0){
 
-	json_put(api_getressources($request['collection']));
+	json__put(api_getressources($request['collection']));
 
 } else {
 
@@ -23,14 +23,14 @@ if (!$request['ressource'] && strcmp($request['ressource'], '0') != 0){
 		if (is_numeric($request['ressource']))
 			$index = $request['ressource'] + 0;
 		$ressources = glob($folder . '*.{*}', GLOB_BRACE);
-		sort_time($ressources);
+		sort__time($ressources);
 		if ($index >= count($ressources))
-			json_puterror(ERR_RESSOURCE_INVALID);
+			json__puterror(ERR_RESSOURCE_INVALID);
 		$file_path = $ressources[$index];
 	}
 
 	if (!file_exists($file_path))
-		json_puterror(ERR_RESSOURCE_INVALID);
+		json__puterror(ERR_RESSOURCE_INVALID);
 
 	$ressource = json_decode(file_get_contents($file_path), true);
 
@@ -42,7 +42,7 @@ if (!$request['ressource'] && strcmp($request['ressource'], '0') != 0){
 				if (is_array($ressource) && isset($ressource[$index]))
 					$ressource = $ressource[$index];
 				else
-					json_puterror(ERR_RESSOURCE_INVALID);
+					json__puterror(ERR_RESSOURCE_INVALID);
 
 			} else {
 
@@ -53,13 +53,13 @@ if (!$request['ressource'] && strcmp($request['ressource'], '0') != 0){
 				} else if (is_array($ressource) && array_key_exists($item, $ressource)){
 					$ressource = $ressource[$item];
 				} else {
-					json_puterror(ERR_RESSOURCE_INVALID);
+					json__puterror(ERR_RESSOURCE_INVALID);
 				}
 
 			}
 		}
 	}
 
-	json_put($ressource);
+	json__put($ressource);
 
 }

@@ -4,11 +4,11 @@
 	user_ functions
 */
 
-function user_hashsignature() {
+function user__hash_signature() {
 	return (hash('sha512', $_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']));
 }
 
-function user_exists(){
+function user__exists(){
 
 	$user_filepath = DATA_PUBLIC_DIR . '/user/1.json';
 	if (file_exists($user_filepath)){
@@ -21,7 +21,7 @@ function user_exists(){
 
 }
 
-function user_isauthorized(){
+function user__is_authorized(){
 
 	if (isset($_COOKIE[COOKIE_KEY_TOKEN])){
 
@@ -30,7 +30,7 @@ function user_isauthorized(){
 			return false;
 		$user_config = json_decode(file_get_contents($filename), true);
 		if ($_COOKIE[COOKIE_KEY_TOKEN] == $user_config['token']
-			&& user_hashsignature() == $user_config['signature']){
+			&& user__hash_signature() == $user_config['signature']){
 				header('Set-Cookie: ' . COOKIE_KEY_TOKEN . '=' . $user_config['token'] . '; path=/; domain=' . $_SERVER['SERVER_NAME'] . '; Max-Age=' . COOKIE_MAX_AGE . '; Secure; HttpOnly; SameSite=None;');
 				return true;
 		}

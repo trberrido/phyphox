@@ -22,7 +22,7 @@ $schema = [
 if ($request['ressource'] && !$request['data']){
 	$filepath = DATA_PUBLIC_DIR . '/' .  $request['collection'] . '/' . $request['ressource'];
 	if (!file_exists($filepath))
-		json_puterror(ERR_RESSOURCE_INVALID);
+		json__puterror(ERR_RESSOURCE_INVALID);
 
 	$content = json_decode(file_get_contents($filepath), true);
 	$visualizations = $content['visualizations'];

@@ -5,13 +5,13 @@
 		delete a ressource
 */
 
-if (!user_isauthorized())
-	json_put(ERR_USER_NOTAUTHORIZED);
+if (!user__is_authorized())
+	json__put(ERR_USER_NOTAUTHORIZED);
 
 $folder = DATA_PUBLIC_DIR . '/' . $request['collection'] . '/';
 $file_path =  $folder . $request['ressource'];
 if (!file_exists($file_path))
-	json_puterror(ERR_RESSOURCE_INVALID);
+	json__puterror(ERR_RESSOURCE_INVALID);
 
 unlink($file_path);
-json_put($request['ressource'] . ' deleted.');
+json__put($request['ressource'] . ' deleted.');

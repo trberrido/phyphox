@@ -3,7 +3,7 @@
 function validate_array($data, $schema){
 
 	$types = [
-		'object'	=> 'json_validate',
+		'object'	=> 'json__validate',
 		'string'	=> 'validate_string',
 		'number'	=> 'validate_number',
 		'boolean'	=> 'validate_boolean',
