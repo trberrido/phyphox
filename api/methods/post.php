@@ -28,7 +28,7 @@ if ($request['ressource']){
 	$filename_copy = DATA_PUBLIC_DIR . '/' .  $request['collection'] . '/' . $content['id'] . '.json';
 	if (!file_put_contents($filename_copy, json_encode($content), LOCK_EX))
 		json__puterror(ERR_FILE_CREATION);
-	json__put(api_getressourceinfo($filename_copy));
+	json__put(api__get_ressource_info($filename_copy));
 
 } else {
 
@@ -50,6 +50,6 @@ if ($request['ressource']){
 	$filename = DATA_PUBLIC_DIR . '/' .  $request['collection'] . '/' . $project_id . '.json';
 	if (!file_put_contents($filename, json_encode($request['data']), LOCK_EX))
 		json__puterror(ERR_FILE_CREATION);
-	json__put(api_getressourceinfo($filename));
+	json__put(api__get_ressource_info($filename));
 
 }

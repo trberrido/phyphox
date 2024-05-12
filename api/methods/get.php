@@ -8,7 +8,7 @@
 
 if (!$request['ressource'] && strcmp($request['ressource'], '0') != 0){
 
-	json__put(api_getressources($request['collection']));
+	json__put(api__get_ressources($request['collection']));
 
 } else {
 

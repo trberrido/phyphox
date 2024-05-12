@@ -11,11 +11,11 @@
 foreach (glob('library/*.php') as $php_file)
 	include_once $php_file;
 
-if (!api_initpublicfolder())
+if (!api__init_public_folders())
 	json__puterror(ERR_FILE_CREATION);
 
 $api = json_decode(file_get_contents(DATA_PRIVATE_DIR . '/api.json'), true);
-$request = api_getrequest();
+$request = api__get_request();
 
 if (!$request['collection'])
 	json__puterror(ERR_COLLECTION_INVALID);
