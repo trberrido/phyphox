@@ -60,7 +60,7 @@ if (isset($request['data']['email']) && isset($request['data']['password'])){
 	if (!password_verify($request['data']['password'], $user__on_hold['password']))
 		json__puterror(ERR_PASSWORD);
 
-	if ($request['data']['email'] != $user_registered['email'])
+	if ($request['data']['email'] !== $user_registered['email'])
 		json__puterror(ERR_EMAIL);
 
 	$user__on_hold['token'] = uniqid();
