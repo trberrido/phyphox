@@ -52,7 +52,9 @@
 
 		"experiments": {
 			"methods": {
-				"GET": ["./methods/experiments/get.php", "./methods/get.php"],
+				"GET": [
+					"./methods/experiments/get.php",
+					"./methods/get.php"],
 				"DELETE": ["./methods/delete.php"]
 			}
 		},
@@ -68,7 +70,10 @@
 
 		"app": {
 			"methods": {
-				"GET": ["./methods/get.php"],
+				"GET": [
+					"./methods/app/init.php",
+					"./methods/get.php"
+				],
 				"PUT": [
 					"./methods/app/validation.php",
 					"./methods/app/generate_pyscripts.php",

@@ -83,15 +83,25 @@ function api__get_request(){
 
 }
 
+/*
+	creates the required folders if the PUBLIC folder does not exist
+*/
+
 function api__init_public_folders(){
+
+	umask(0002);
 	if (file_exists(DATA_PUBLIC_DIR))
 		return true;
-	if (!mkdir(DATA_PUBLIC_DIR))
+
+	if (!mkdir(DATA_PUBLIC_DIR, 0775, true))
 		return false;
+
 	$folders = json_decode(file_get_contents(DATA_PRIVATE_DIR . '/api.json'), true);
 	foreach ($folders['collections'] as $folder_name => $methods){
-		if (!mkdir(DATA_PUBLIC_DIR . '/' . $folder_name))
+		if (!mkdir(DATA_PUBLIC_DIR . '/' . $folder_name, 0775, true))
 			return false;
 	}
+
 	return true;
+
 }

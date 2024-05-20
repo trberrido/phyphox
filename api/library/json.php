@@ -49,12 +49,46 @@ function json__validate($data, $schema){
 
 }
 
+/* create json from schema */
+
+function json__create_from_schema($schema_path, $json_file){
+
+	$content = file_get_contents($schema_path);
+	if (!$content)
+		return false;
+	$schema = json_decode($content, true);
+
+	$object = [];
+	$types_default_value_match = [
+		'object'	=> null,
+		'string'	=> '',
+		'number'	=> 0,
+		'boolean'	=> false,
+		'array'		=> []
+	];
+
+	foreach ($schema['properties'] as $property => $values){
+		if (array_key_exists('type', $values))
+			$object[$property] = $types_default_value_match[$values['type']];
+		else
+			$object[$property] = null;
+	}
+
+	if (!file_put_contents($json_file, json_encode($object)))
+		return false;
+
+	return true;
+
+}
+
+/* output functions */
+
 function json__put($content = true){
 	header('Content-Type: application/json; charset=utf-8');
 	echo json_encode($content);
 	exit();
 }
 
-function json__puterror($content = false){
-	json__put(['error' => $content]);
+function json__puterror($error = true){
+	json__put(['error' => $error]);
 }

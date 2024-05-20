@@ -13,6 +13,7 @@ const APPSTATE_ISOPEN			= true;
 // Error constants
 
 const ERR_URL_INVALID			= 'Invalid URL';
+const ERR_PERMISSIONS			= 'Permissions denied';
 const ERR_USER_NOTAUTHORIZED	= 'Not authorised.';
 const ERR_USER_ALREADYEXISTS	= 'Only one user allowed.';
 const ERR_HTTPMETHOD_INVALID	= 'Method not supported';
