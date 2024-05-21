@@ -11,6 +11,9 @@
 foreach (glob('library/*.php') as $php_file)
 	include_once $php_file;
 
+if (version_compare(PHP_VERSION, PHP_REQUIRED_VERSION, '<'))
+	json__puterror(ERR_OUTTADED_REQUIREMENTS);
+
 if (!api__init_public_folders())
 	json_puterror(ERR_PERMISSIONS);
 

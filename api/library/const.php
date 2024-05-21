@@ -3,6 +3,8 @@
 const DATA_PUBLIC_DIR	= './data/public';
 const DATA_PRIVATE_DIR	= './data/private';
 
+const PHP_REQUIRED_VERSION = '8.0.0';
+
 const COOKIE_KEY_TOKEN = 'phyphox';
 const COOKIE_MAX_AGE = 43200;
 
@@ -12,6 +14,7 @@ const APPSTATE_ISOPEN			= true;
 
 // Error constants
 
+const ERR_OUTTADED_REQUIREMENTS	= PHP_REQUIRED_VERSION . ' is required, you have ' . PHP_VERSION;
 const ERR_URL_INVALID			= 'Invalid URL';
 const ERR_PERMISSIONS			= 'Permissions denied';
 const ERR_USER_NOTAUTHORIZED	= 'Not authorised.';
