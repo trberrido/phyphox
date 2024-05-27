@@ -42,6 +42,12 @@ $is_applistening = app__is_listening();
 if (strcmp($request['ressource'], 'current') == 0 && !$is_applistening)
 	json__put(SIG_CLOSING);
 
+// scenario of first time connection:
+// override the default behavior of the generic GET method
+$folder = DATA_PUBLIC_DIR . '/' . $request['collection'] . '/';
+if ($request['ressource'] && strcmp($request['ressource'], 'last') === 0 && count(glob($folder . '*.json', GLOB_BRACE)) === 0)
+	json__puterror('No experiment yet.');
+
 // otherwise, if app is listening, gather data from data/inputs/{current_experiment} .json
 if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 
