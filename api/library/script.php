@@ -34,7 +34,7 @@ function script__exec($script_filename, $data){
 	if (!file_put_contents($input_filename, json_encode($data)))
 		json__puterror(ERR_FILE_CREATION);
 
-	$cmd = './' . $script_filename . ' ' . $input_filename . ' ' . $output_filename . ' 2> ' . $stderr;
+	$cmd = 'python ' . $script_filename . ' ' . $input_filename . ' ' . $output_filename . ' 2> ' . $stderr;
 	$exitcode = 0;
 	$output = null;
 	exec($cmd , $output, $exitcode);
