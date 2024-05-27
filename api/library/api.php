@@ -20,12 +20,16 @@ function api__get_ressource_info($file_path){
 		'filesize' 	=> filesize($file_path)
 	];
 
-	$file = json_decode(file_get_contents($file_path), true);
-	if ($file === null)
-		json__puterror('The following file contains an error and must be removed: ' . basename($file_path));
+	if (pathinfo($file_path, PATHINFO_EXTENSION) === 'json'){
+		$file = json_decode(file_get_contents($file_path), true);
+		if ($file === null)
+			json__puterror('The following file contains an error and must be removed: ' . basename($file_path));
 
-	if (array_key_exists('title', $file))
-		$ressourceinfos['title'] = $file['title'];
+		if (array_key_exists('title', $file))
+			$ressourceinfos['title'] = $file['title'];
+	} else {
+		$ressourceinfos['title'] = $ressourceinfos['id'];
+	}
 
 	return $ressourceinfos;
 
@@ -37,7 +41,7 @@ function api__get_ressource_info($file_path){
 */
 
 function api__get_ressources($collection){
-	$ressources = glob(DATA_PUBLIC_DIR . '/' . $collection . '/*.json');
+	$ressources = glob(DATA_PUBLIC_DIR . '/' . $collection . '/*');
 	sort__time($ressources);
 	$ressources = array_map(
 		'api__get_ressource_info',

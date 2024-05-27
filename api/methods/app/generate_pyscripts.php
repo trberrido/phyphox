@@ -26,7 +26,7 @@
 			$script_content = preg_replace('~\r\n?~', "\n", $script_content);
 
 			file_put_contents($script_path . $script_filename, $script_content);
-			chmod($script_path . $script_filename, 0777);
+			chmod($script_path . $script_filename, 0775);
 
 		}
 

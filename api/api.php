@@ -15,13 +15,13 @@ if (version_compare(PHP_VERSION, PHP_REQUIRED_VERSION, '<'))
 	json__puterror(ERR_OUTTADED_REQUIREMENTS);
 
 if (!api__init_public_folders())
-	json_puterror(ERR_PERMISSIONS);
+	json__puterror(ERR_PERMISSIONS);
 
 $api = json_decode(file_get_contents(DATA_PRIVATE_DIR . '/api.json'), true);
 $request = api__get_request();
 
 if (!$request['collection'])
-	json__puterror(ERR_COLLECTION_INVALID);
+	json__put(array_keys($api['collections']));
 
 if (!array_key_exists($request['collection'], $api['collections']))
 	json__puterror(ERR_COLLECTION_INVALID);

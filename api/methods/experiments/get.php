@@ -31,7 +31,7 @@ function displayeddata_match_schema($data, $type){
 					title, description, pythonfile, id | { idx, idy },
 					phyphoxData, displayedData
 				},
-				{...}, 
+				{...},
 			]
 		}
 
@@ -58,6 +58,8 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 		if (file_exists($experiment_filename)){
 
 			$experiment_data = json_decode(file_get_contents($experiment_filename), true);
+			if ($experiment_data === null)
+				json__puterror(ERR_RESSOURCE_CORR);
 
 		} else {
 
@@ -112,7 +114,7 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 		foreach($inputs as $input){
 
 			// filter only the inputs files older than 1 sec
-			if ($now - filemtime($input) >= $timelimite){
+		//	if ($now - filemtime($input) >= $timelimite){
 
 				// put each data from input in their corresponding visualizations
 				$input_data = json_decode(file_get_contents($input), true);
@@ -250,7 +252,8 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 
 				unlink($input);
 
-			}
+		//	}
+
 		}
 
 		if (count($inputs)){

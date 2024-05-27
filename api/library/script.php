@@ -27,31 +27,20 @@ function script__exec($script_filename, $data){
 
 	// the script will be laumched as `./script.py input.json output.json 2>&1`
 	$id = uniqid();
-	$input_filename = DATA_PUBLIC_DIR . '/scripts/' . $id . '_input.json';
-	$output_filename = DATA_PUBLIC_DIR . '/scripts/' . $id . '_output.json';
-	$stderr = DATA_PUBLIC_DIR . '/scripts/' . $id . '_error.json';
-	$outputcpy = DATA_PUBLIC_DIR . '/pythonoutput/' . $id . '.json';
-	$inputcpy = DATA_PUBLIC_DIR . '/pythoninput/' . $id . '.json';
+	$stderr = DATA_PUBLIC_DIR . '/pythonerror/' . $id . '.txt';
+	$input_filename = DATA_PUBLIC_DIR . '/pythoninput/' . $id . '.json';
+	$output_filename = DATA_PUBLIC_DIR . '/pythonoutput/' . $id . '.json';
 
 	if (!file_put_contents($input_filename, json_encode($data)))
 		json__puterror(ERR_FILE_CREATION);
 
-	if (!copy($input_filename, $inputcpy))
-		json__puterror(ERR_FILE_CPY);
-
 	$cmd = './' . $script_filename . ' ' . $input_filename . ' ' . $output_filename . ' 2> ' . $stderr;
 	$exitcode = 0;
+	$output = null;
 	exec($cmd , $output, $exitcode);
-
 	// if error from python, print it
-	if ($exitcode){
-		file_put_contents($outputcpy, json_encode(file_get_contents($stderr)));
+	if ($exitcode)
 		json__puterror(file_get_contents($stderr));
-	}
-
-	// make a copy of the output
-	if (!copy($output_filename, $outputcpy))
-		json__puterror(ERR_FILE_CPY);
 
 	$output = json_decode(file_get_contents($output_filename), true);
 

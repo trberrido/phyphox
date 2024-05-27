@@ -22,8 +22,9 @@ if ($py2_output){
 	$informations['Available py versions on this server']['version 2'] = [
 		'version' 	=> $py2_output,
 		'numpy'		=> $numpy_version,
-		'notes'		=> 'Please use the shebang below and the "import sys" and, if installed, "import numpy" commands on top of your script.',
-		'shebang'	=> '#!/usr/bin/env python'
+		'notes'		=> 'Please use the shebang below and the "import sys", "import json" and, if installed, "import numpy" commands on top of your script.',
+		'shebang'	=> '#!/usr/bin/env python',
+		'examples'	=> 'https://someexamples'
 	];
 }
 
@@ -36,8 +37,9 @@ if ($py3_output){
 	$informations['Available py versions on this server']['version 3'] = [
 		'version' 	=> $py3_output,
 		'numpy'		=> $numpy_version,
-		'notes'		=> 'Please use the shebang below and the "import sys" and, if installed, "import numpy" commands on top of your script.',
-		'shebang'	=> '#!/usr/bin/env python3'
+		'notes'		=> 'Please use the shebang below and the "import sys", "import json", and, if installed, "import numpy" commands on top of your script.',
+		'shebang'	=> '#!/usr/bin/env python3',
+		'examples'	=> 'https://someexamples'
 	];
 }
 

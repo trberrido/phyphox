@@ -13,6 +13,12 @@
 			}
 		},
 
+		"pythonerror": {
+			"methods": {
+				"GET": ["./methods/clear_old_ressources.php", "./methods/pythonerror/get.php"]
+			}
+		},
+
 		"pythoninput": {
 			"methods": {
 				"GET": ["./methods/clear_old_ressources.php", "./methods/get.php"]
@@ -86,10 +92,6 @@
 			"methods": {
 				"GET" : ["./methods/get.php"]
 			}
-		},
-
-		"scripts": {
-			"methods": {}
 		}
 
 	}

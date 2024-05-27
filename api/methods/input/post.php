@@ -2,12 +2,11 @@
 
 /*
 	POST
-		create ressource from the smarthone app
-		if the admin user had opened an experiment
+		create ressource from data sent by the smarthone app if the app is listening
+		+ for debug : save all the data received in raw/, whatever the app state is
 */
 
-
-// for debug : save all the data received in raw/
+// remove old raw files before saving a new one
 $folder = DATA_PUBLIC_DIR . '/raw/';
 $ressources = glob($folder . '*.{*}', GLOB_BRACE);
 $now = time();
@@ -17,9 +16,16 @@ foreach($ressources as $ressource){
 		unlink($ressource);
 }
 
+if (!json__check_input(file_get_contents('php://input'))){
+	json__puterror(ERR_DATA_INVALID);
+}
+
 $request['data'] = json_decode(file_get_contents('php://input'));
 $rawfilename = DATA_PUBLIC_DIR . '/raw/' . uniqid() . '.json';
 file_put_contents($rawfilename, json_encode($request['data']), LOCK_EX);
+
+// debug is done, below the normal process
+// storing in input/
 
 if (!app__is_listening())
 	json__puterror(APPSTATE_ISCLOSED);
