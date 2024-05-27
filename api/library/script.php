@@ -18,13 +18,6 @@ function script__get_filename($experiment_id, $visualization_index){
 */
 function script__exec($script_filename, $data){
 
-	// erase all input / output previous files
-	$folder = DATA_PUBLIC_DIR . '/scripts/';
-	$files = glob($folder . '*.json');
-	foreach($files as $file){
-		unlink($file);
-	}
-
 	// the script will be laumched as `./script.py input.json output.json 2>&1`
 	$id = uniqid();
 	$stderr = DATA_PUBLIC_DIR . '/pythonerror/' . $id . '.txt';
