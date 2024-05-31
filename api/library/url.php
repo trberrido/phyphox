@@ -3,30 +3,29 @@
 /*
 	Filters URL request
 		removing all non alpha-numerical chars
-		if presents, removes site subfolder from URL
-	Returns an array of meaning parameters.
+		if presents, removes site subfolder from URL until /api/ included
+	Returns an array of meaningfull parameters:
+	[
+		0 => collection,
+		1 => ressource,
+		2 => item1,
+		3 => item2,
+		4 => item3,
+		...
+	]
 */
 
-function url_explode(){
+function url__parse(){
 
 	$url = trim($_SERVER['REQUEST_URI'], "/");
 	$requests = explode('/', $url);
-	$requests = array_map(function($str) { return str_sanitizestrict($str); }, $requests);
+	$requests = array_map(function($str) { return str__sanitize_strict($str); }, $requests);
 
-	$config = json_decode(file_get_contents(DATA_PRIVATE_DIR . '/config.json'));
-	$site_path = explode('/', trim($config->directory, "/"));
-	if (!count($site_path))
-		return $requests;
+	$last_apidir_position = array_search('api', array_reverse($requests, true));
+	if ($last_apidir_position === false)
+		json__puterror(ERR_URL_INVALID);
 
-	foreach($site_path as $directory){
-		if (!strlen($directory))
-			break;
-		if ($directory == $requests[0]){
-			array_shift($requests);
-		} else {
-			json_puterror(ERR_URL_INVALID);
-		}
-	}
+	$requests = array_slice($requests, $last_apidir_position + 1);
 
 	if (!count($requests))
 		$requests = [''];

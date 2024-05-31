@@ -4,14 +4,14 @@
 
 /* returns the list names of the available collections */
 
-function api_getcollections(){
+function api__get_collections(){
 	$api = json_decode(file_get_contents(DATA_PRIVATE_DIR . '/api.json'), true);
 	return ($api['collections']);
 }
 
 /* returns ressource's formated data */
 
-function api_getressourceinfo($file_path){
+function api__get_ressource_info($file_path){
 
 	$ressourceinfos = [
 		'id'		=> pathinfo($file_path, PATHINFO_FILENAME),
@@ -19,9 +19,17 @@ function api_getressourceinfo($file_path){
 		'filename' 	=> basename($file_path),
 		'filesize' 	=> filesize($file_path)
 	];
-	$file = json_decode(file_get_contents($file_path), true);
-	if (array_key_exists('title', $file))
-		$ressourceinfos['title'] = $file['title'];
+
+	if (pathinfo($file_path, PATHINFO_EXTENSION) === 'json'){
+		$file = json_decode(file_get_contents($file_path), true);
+		if ($file === null)
+			json__puterror('The following file contains an error and must be removed: ' . basename($file_path));
+
+		if (array_key_exists('title', $file))
+			$ressourceinfos['title'] = $file['title'];
+	} else {
+		$ressourceinfos['title'] = $ressourceinfos['id'];
+	}
 
 	return $ressourceinfos;
 
@@ -32,11 +40,11 @@ function api_getressourceinfo($file_path){
 	returns the list of ressources data
 */
 
-function api_getressources($collection){
-	$ressources = glob(DATA_PUBLIC_DIR . '/' . $collection . '/*.json');
-	sort_time($ressources);
+function api__get_ressources($collection){
+	$ressources = glob(DATA_PUBLIC_DIR . '/' . $collection . '/*');
+	sort__time($ressources);
 	$ressources = array_map(
-		'api_getressourceinfo',
+		'api__get_ressource_info',
 		$ressources
 	);
 	return ($ressources);
@@ -47,7 +55,7 @@ function api_getressources($collection){
 	[ method / collection / ressource ] associative array
 */
 
-function api_getrequest(){
+function api__get_request(){
 
 	$request = [
 		'method'		=> false,
@@ -57,10 +65,9 @@ function api_getrequest(){
 		'data'			=> false
 	];
 
-	$collections_available = api_getcollections();
+	$collections_available = api__get_collections();
 
-	$user_request = url_explode();
-	array_shift($user_request);
+	$user_request = url__parse();
 
 	if ($_SERVER['REQUEST_METHOD'])
 		$request['method'] = $_SERVER['REQUEST_METHOD'];
@@ -77,5 +84,28 @@ function api_getrequest(){
 	$request['data'] = json_decode(file_get_contents('php://input'), true);
 
 	return $request;
+
+}
+
+/*
+	creates the required folders if the PUBLIC folder does not exist
+*/
+
+function api__init_public_folders(){
+
+	umask(0002);
+	if (file_exists(DATA_PUBLIC_DIR))
+		return true;
+
+	if (!mkdir(DATA_PUBLIC_DIR, 0775, true))
+		return false;
+
+	$folders = json_decode(file_get_contents(DATA_PRIVATE_DIR . '/api.json'), true);
+	foreach ($folders['collections'] as $folder_name => $methods){
+		if (!mkdir(DATA_PUBLIC_DIR . '/' . $folder_name, 0775, true))
+			return false;
+	}
+
+	return true;
 
 }

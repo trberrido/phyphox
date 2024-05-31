@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkphyphox_front=self.webpackChunkphyphox_front||[]).push([[751],{698:(n,t,e)=>{e.r(t),e.d(t,{default:()=>r});e(43);var i=e(475),a=e(68),s=e(139),o=e(579);const r=()=>(0,o.jsxs)(o.Fragment,{children:[(0,o.jsx)(a.h,{header:"Edit an experience",content:"Edit this configuration"}),(0,o.jsx)(i.N_,{className:"configuration__link",to:"/administration",children:"\u2190 Back to administration."}),(0,o.jsx)(s.A,{method:"PUT"})]})}}]);
+//# sourceMappingURL=751.7bc07cd3.chunk.js.map
