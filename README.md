@@ -114,11 +114,11 @@ The parameters of the connection should be adapted to your need. Their role is d
 -	`buffer1` and `buffer2` are phyphox buffers; the data they contain will be sent to the server. They can contain 0, 1, or multiple data. They need to be defined as any phyphox buffer does (see the phyphox file format).
 -	There must be at least one “send” field, and as many as needed.
 
-You can find some example of phyphox experiments [https://github.com/frederic-bouquet/phyphox-dataviz-tools](HERE). If you want to test them on your server, do not forget to change the parameter `address` in the `connection` field.
+You can find some example of phyphox experiments at [https://github.com/frederic-bouquet/phyphox-dataviz-tools](https://github.com/frederic-bouquet/phyphox-dataviz-tools). If you want to test them on your server, do not forget to change the parameter `address` in the `connection` field.
 
 ## Python Scripting
 
-If you enter a python script, it will be executed on the received data before plotting. Some example can be found [https://github.com/frederic-bouquet/phyphox-dataviz-tools](HERE).
+If you enter a python script, it will be executed on the received data before plotting. Some example can be found at [https://github.com/frederic-bouquet/phyphox-dataviz-tools](https://github.com/frederic-bouquet/phyphox-dataviz-tools).
 
 The idea is that python is run at each iteration (each second) on an input json file that contains the data received by the server and that have been declared either as a mail parameter (`data ID` in the visualization configuration), or as an extra variable. This input file is accessible in the python script as `sys.argv[1]`. The script then must produce an output following a precise structure, depending on the visualization configuration.
 
