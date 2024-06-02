@@ -85,7 +85,7 @@ function json__create_from_schema($schema_path, $json_file){
 
 function json__put($content = true){
 	header('Content-Type: application/json; charset=utf-8');
-	echo json_encode($content);
+	echo json_encode($content, JSON_PRETTY_PRINT);
 	exit();
 }
 
