@@ -1,6 +1,6 @@
-# <FilesMatch \.(php|phar)$>
-# SetHandler "proxy:unix:/var/run/php81-fpm.sock|fcgi://localhost/"
-# </FilesMatch>
+<FilesMatch \.(php|phar)$>
+SetHandler "proxy:unix:/var/run/php81-fpm.sock|fcgi://localhost/"
+</FilesMatch>
 
 # Redirect to the front entry point
 RewriteEngine On
