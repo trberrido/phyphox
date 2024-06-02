@@ -8,11 +8,14 @@
 		require authorization
 */
 
+if (version_compare(PHP_VERSION, '8.0.0', '<')){
+	header('Content-Type: application/json');
+	echo json_encode(array('error' => 'PHP version 8.0.0 or higher is required'));
+	exit();
+}
+
 foreach (glob('library/*.php') as $php_file)
 	include_once $php_file;
-
-if (version_compare(PHP_VERSION, PHP_REQUIRED_VERSION, '<'))
-	json__puterror(ERR_OUTTADED_REQUIREMENTS);
 
 if (!api__init_public_folders())
 	json__puterror(ERR_PERMISSIONS);
