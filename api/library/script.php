@@ -32,8 +32,14 @@ function script__exec($script_filename, $data){
 	$output = null;
 	exec($cmd , $output, $exitcode);
 	// if error from python, print it
-	if ($exitcode)
+	if ($exitcode){
+		if (!file_exists($stderr))
+			json__puterror(ERR_PY_NO_STDERR);
 		json__puterror(file_get_contents($stderr));
+	}
+
+	if (!file_exists($output_filename))
+		json__puterror(ERR_PY_OUTPUT);
 
 	$output = json_decode(file_get_contents($output_filename), true);
 
