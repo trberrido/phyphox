@@ -4,39 +4,23 @@
 // display the available version of python on this server
 
 $informations = [
-	'Available py versions on this server' => ['python not available'],
+	'Available py versions on this server' => ['python not available. If you know for sure your server use python3, you may try: `sudo ln -sf /usr/bin/python3 /usr/bin/python`'],
 ];
 
-$py2_cmd = escapeshellcmd('python ' . DATA_PRIVATE_DIR . '/py2.py');
-//$py3_cmd = escapeshellcmd('python3 ' . DATA_PRIVATE_DIR . '/py3.py');
+$py_cmd = escapeshellcmd('python ' . DATA_PRIVATE_DIR . '/py.py');
 
-$py2_output = shell_exec($py2_cmd);
+$py_output = shell_exec($py_cmd);
 
-if ($py2_output){
-	$py2_numpy_cmd = escapeshellcmd('python ' . DATA_PRIVATE_DIR . '/py2_numpy.py');
-	$shell_output = shell_exec($py2_numpy_cmd);
+if ($py_output){
+	$py_numpy_cmd = escapeshellcmd('python ' . DATA_PRIVATE_DIR . '/py_numpy.py');
+	$shell_output = shell_exec($py_numpy_cmd);
 	$numpy_version = $shell_output ? $shell_output : 'not installed';
 	$informations['Available py versions on this server'] = [
-		'version' 	=> $py2_output,
+		'version' 	=> $py_output,
 		'numpy'		=> $numpy_version,
-		'notes'		=> 'Use the "import sys", "import json" and, if installed, "import numpy" commands on top of your script.',
+		'notes'		=> 'Use the "import json" and, if installed, "import numpy" commands on top of your script.',
 		'examples'	=> 'https://someexamples'
 	];
 }
-
-/* $py3_output = shell_exec($py3_cmd);
-
-if ($py3_output){
-	$py3_numpy_cmd = escapeshellcmd('./' . DATA_PRIVATE_DIR . '/py3_numpy.py');
-	$shell_output = shell_exec($py3_numpy_cmd);
-	$numpy_version = $shell_output ? $shell_output : 'not installed';
-	$informations['Available py versions on this server']['version 3'] = [
-		'version' 	=> $py3_output,
-		'numpy'		=> $numpy_version,
-		'notes'		=> 'Please use the shebang below and the "import sys", "import json", and, if installed, "import numpy" commands on top of your script.',
-		'shebang'	=> '#!/usr/bin/env python3',
-		'examples'	=> 'https://someexamples'
-	];
-} */
 
 json__put($informations);
