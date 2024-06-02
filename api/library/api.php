@@ -21,11 +21,11 @@ function api__get_ressource_info($file_path){
 	];
 
 	if (pathinfo($file_path, PATHINFO_EXTENSION) === 'json'){
-		$file = json_decode(file_get_contents($file_path), true);
+		$file = @json_decode(file_get_contents($file_path), true);
 		if ($file === null)
 			json__puterror('The following file contains an error and must be removed: ' . basename($file_path));
 
-		if (array_key_exists('title', $file))
+		if (is_array($file) && array_key_exists('title', $file))
 			$ressourceinfos['title'] = $file['title'];
 	} else {
 		$ressourceinfos['title'] = $ressourceinfos['id'];
@@ -93,16 +93,15 @@ function api__get_request(){
 
 function api__init_public_folders(){
 
-	umask(0002);
 	if (file_exists(DATA_PUBLIC_DIR))
 		return true;
 
-	if (!mkdir(DATA_PUBLIC_DIR, 0775, true))
+	if (!@mkdir(DATA_PUBLIC_DIR, 0775, true))
 		return false;
 
 	$folders = json_decode(file_get_contents(DATA_PRIVATE_DIR . '/api.json'), true);
 	foreach ($folders['collections'] as $folder_name => $methods){
-		if (!mkdir(DATA_PUBLIC_DIR . '/' . $folder_name, 0775, true))
+		if (!@mkdir(DATA_PUBLIC_DIR . '/' . $folder_name, 0775, true))
 			return false;
 	}
 
