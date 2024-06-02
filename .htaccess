@@ -1,4 +1,8 @@
-# redirect to the front entry point
+# <FilesMatch \.(php|phar)$>
+# SetHandler "proxy:unix:/var/run/php81-fpm.sock|fcgi://localhost/"
+# </FilesMatch>
+
+# Redirect to the front entry point
 RewriteEngine On
 DirectoryIndex index.html
 RewriteCond %{REQUEST_FILENAME} !-f
