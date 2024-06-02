@@ -17,7 +17,7 @@ const APPSTATE_ISOPEN			= true;
 const ERR_OUTTADED_REQUIREMENTS	= PHP_REQUIRED_VERSION . ' is required, you have ' . PHP_VERSION;
 const ERR_URL_INVALID			= 'Invalid URL';
 const ERR_PERMISSIONS			= [
-	'description'	=> 'Permissions denied. Please set the permissions of the folder `api/data` to 775 as follow:',
+	'description'	=> 'Permissions denied. Please set the permissions of the folder `api/data` to 775, with recursion activated for both files and directories, as follow:',
 	'url'			=> '/api/data/private/permissions.webm'
 ];
 const ERR_USER_NOTAUTHORIZED	= 'Not authorised.';
