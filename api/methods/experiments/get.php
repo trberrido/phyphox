@@ -179,9 +179,11 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 
 								//	check if displayedData matches the schema
 								if (!displayeddata_match_schema(	// @data, @type
-									$experiment_data['visualizations'][$visualization_index],
-									$experiment_data['visualizations'][$visualization_index]['type']
-								)){
+										$experiment_data['visualizations'][$visualization_index],
+										$experiment_data['visualizations'][$visualization_index]['type']
+									)
+									&& !empty($experiment_data['visualizations'][$visualization_index]['displayedData'])
+								){
 									json__puterror(ERR_DATA_NOTMATCHING);
 								}
 
