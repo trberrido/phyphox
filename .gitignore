@@ -3,3 +3,4 @@ error.log
 read_debug.sh
 phyphox-front
 api/data/public
+.webhook/
