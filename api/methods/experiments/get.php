@@ -181,9 +181,7 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 								if (!displayeddata_match_schema(	// @data, @type
 										$experiment_data['visualizations'][$visualization_index],
 										$experiment_data['visualizations'][$visualization_index]['type']
-									)
-									&& !empty($experiment_data['visualizations'][$visualization_index]['displayedData'])
-								){
+									)){
 									json__puterror(ERR_DATA_NOTMATCHING);
 								}
 
@@ -285,6 +283,10 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 							$data['extravariables'] =  $experiment_data['visualizations'][$visualization_index]['extravariables'];
 
 						$experiment_data['visualizations'][$visualization_index]['displayedData'] = script__exec($script_filename, $data);
+
+						// allow .py script to filter everything without considering it as an error
+						if (empty($experiment_data['visualizations'][$visualization_index]['displayedData']))
+							continue ;
 
 						//	check if displayedData matches the schema
 						if (!displayeddata_match_schema(	// @data, @type
