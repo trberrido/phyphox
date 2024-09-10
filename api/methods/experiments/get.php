@@ -285,6 +285,7 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 						$experiment_data['visualizations'][$visualization_index]['displayedData'] = script__exec($script_filename, $data);
 
 						// allow .py script to filter everything without considering it as an error
+						// do not increment the number of participation
 						if (empty($experiment_data['visualizations'][$visualization_index]['displayedData']))
 							continue ;
 
