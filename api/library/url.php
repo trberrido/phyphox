@@ -15,7 +15,7 @@
 	]
 */
 
-function url__parse(){
+function url__parse():array {
 
 	$url = trim($_SERVER['REQUEST_URI'], "/");
 	$requests = explode('/', $url);

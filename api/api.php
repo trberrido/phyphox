@@ -1,13 +1,5 @@
 <?php
 
-/*
-	Entry point of the api,
-	filters wrong requests, then
-	includes files related to request
-		by default, all the non-safe operations
-		require authorization
-*/
-
 if (version_compare(PHP_VERSION, '8.0.0', '<')){
 	header('Content-Type: application/json');
 	echo json_encode(array('error' => 'PHP version 8.0.0 or higher is required'));
@@ -16,6 +8,11 @@ if (version_compare(PHP_VERSION, '8.0.0', '<')){
 
 foreach (glob('library/*.php') as $php_file)
 	include_once $php_file;
+
+/*
+	We need to ensure this api will be able
+	owns enough permission to write files
+*/
 
 if (!api__init_public_folders())
 	json__puterror(ERR_PERMISSIONS);

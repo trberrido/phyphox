@@ -2,16 +2,12 @@
 
 /* api_ functions */
 
-/* returns the list names of the available collections */
-
-function api__get_collections(){
+function api__get_collections(): array {
 	$api = json_decode(file_get_contents(DATA_PRIVATE_DIR . '/api.json'), true);
 	return ($api['collections']);
 }
 
-/* returns ressource's formated data */
-
-function api__get_ressource_info($file_path){
+function api__get_ressource_info(string $file_path): array {
 
 	$ressourceinfos = [
 		'id'		=> pathinfo($file_path, PATHINFO_FILENAME),
@@ -20,27 +16,18 @@ function api__get_ressource_info($file_path){
 		'filesize' 	=> filesize($file_path)
 	];
 
-	if (pathinfo($file_path, PATHINFO_EXTENSION) === 'json'){
-		$file = @json_decode(file_get_contents($file_path), true);
-		if ($file === null)
-			json__puterror('The following file contains an error and must be removed: ' . basename($file_path));
+	$file = @json_decode(file_get_contents($file_path), true);
 
-		if (is_array($file) && array_key_exists('title', $file))
-			$ressourceinfos['title'] = $file['title'];
-	} else {
-		$ressourceinfos['title'] = $ressourceinfos['id'];
-	}
+	if (!isset($file))
+		$ressourceinfos['title'] = basename($file_path);
+	else if (is_array($file) && array_key_exists('title', $file))
+		$ressourceinfos['title'] = $file['title'];
 
 	return $ressourceinfos;
 
 }
 
-/*
-	takes a collection's name
-	returns the list of ressources data
-*/
-
-function api__get_ressources($collection){
+function api__get_ressources(string $collection): array {
 	$ressources = glob(DATA_PUBLIC_DIR . '/' . $collection . '/*');
 	sort__time($ressources);
 	$ressources = array_map(
@@ -50,12 +37,7 @@ function api__get_ressources($collection){
 	return ($ressources);
 }
 
-/*
-	parses the URL into
-	[ method / collection / ressource ] associative array
-*/
-
-function api__get_request(){
+function api__get_request():array {
 
 	$request = [
 		'method'		=> false,
@@ -91,7 +73,7 @@ function api__get_request(){
 	creates the required folders if the PUBLIC folder does not exist
 */
 
-function api__init_public_folders(){
+function api__init_public_folders():bool {
 
 	if (file_exists(DATA_PUBLIC_DIR))
 		return true;

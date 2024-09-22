@@ -1,6 +1,6 @@
 <?php
 
-function json__validate_array($data, $schema){
+function json__validate_array(mixed $data, array $schema): bool {
 
 	$types = [
 		'object'	=> 'json__validate',

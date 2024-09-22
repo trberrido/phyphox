@@ -1,6 +1,6 @@
 <?php
 
-function json__validate_string($data, $schema){
+function json__validate_string(mixed $data, array $schema): bool {
 
 	$formats = [
 		'email' => function ($str) {

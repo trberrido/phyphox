@@ -1,20 +1,16 @@
 <?php
 
-/*
-	json_ functions
-*/
-
-function json__check_input($input) {
+function json__check_input(mixed $input):bool {
 	@json_decode($input);
 	return json_last_error() === JSON_ERROR_NONE;
 }
 
-/* json validation with schema json file */
+/* loading function used by json__validate */
 
 foreach (glob('library/json__validate/*.php') as $php_file)
 	include_once $php_file;
 
-function json__validate($data, $schema){
+function json__validate(mixed $data, array $schema):bool {
 
 	// the below functions are in ./json__validate
 	$types = [
@@ -26,7 +22,6 @@ function json__validate($data, $schema){
 		'any'		=> 'json__validate_any'
 	];
 
-	// check if required properties are present in data
 	if (array_key_exists('required', $schema)){
 		foreach ($schema['required'] as $requirement){
 			if (!array_key_exists($requirement, $data))
@@ -34,9 +29,6 @@ function json__validate($data, $schema){
 		}
 	}
 
-	// check if data
-	//		- is present in the schema
-	//		- applies to the indicated type in schema
 	foreach ($data as $key => $value){
 		if (!array_key_exists($key, $schema['properties']))
 			continue ;
@@ -49,9 +41,7 @@ function json__validate($data, $schema){
 
 }
 
-/* create json from schema */
-
-function json__create_from_schema($schema_path, $json_file){
+function json__create_from_schema(string $schema_path, string $json_file):bool {
 
 	$content = file_get_contents($schema_path);
 	if (!$content)
@@ -81,14 +71,14 @@ function json__create_from_schema($schema_path, $json_file){
 
 }
 
-/* output functions */
+/* the json__put signs the end of the program */
 
-function json__put($content = true){
+function json__put(mixed $content = true):void {
 	header('Content-Type: application/json; charset=utf-8');
 	echo json_encode($content, JSON_PRETTY_PRINT);
 	exit();
 }
 
-function json__puterror($error = true){
+function json__puterror(mixed $error = true):void {
 	json__put(['error' => $error]);
 }

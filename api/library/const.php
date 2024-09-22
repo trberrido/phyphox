@@ -12,8 +12,6 @@ const SIG_CLOSING				= 'closing';
 const APPSTATE_ISCLOSED			= false;
 const APPSTATE_ISOPEN			= true;
 
-// Error constants
-
 const ERR_OUTTADED_REQUIREMENTS	= PHP_REQUIRED_VERSION . ' is required, you have ' . PHP_VERSION;
 const ERR_URL_INVALID			= 'Invalid URL';
 const ERR_PERMISSIONS			= [

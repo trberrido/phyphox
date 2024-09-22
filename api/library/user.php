@@ -1,14 +1,10 @@
 <?php
 
-/*
-	user_ functions
-*/
-
-function user__hash_signature() {
+function user__hash_signature():string {
 	return (hash('sha512', $_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']));
 }
 
-function user__exists(){
+function user__exists():bool {
 
 	$user_filepath = DATA_PUBLIC_DIR . '/user/1.json';
 	if (file_exists($user_filepath)){
@@ -21,7 +17,7 @@ function user__exists(){
 
 }
 
-function user__is_authorized(){
+function user__is_authorized():bool {
 
 	if (isset($_COOKIE[COOKIE_KEY_TOKEN])){
 
