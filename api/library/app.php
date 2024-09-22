@@ -5,12 +5,12 @@ function app__is_listening():bool {
 	return $appstate['isListening'];
 }
 
-function app__get_current_configuration():bool {
+function app__get_current_configuration():string {
 	$appstate = json_decode(file_get_contents(DATA_PUBLIC_DIR . '/app/state.json'), true);
 	return $appstate['currentConfiguration'];
 }
 
-function app__get_current_experience():bool {
+function app__get_current_experience():string {
 	$appstate = json_decode(file_get_contents(DATA_PUBLIC_DIR . '/app/state.json'), true);
 	return $appstate['startedAt'] . '_' . $appstate['currentConfiguration'];
 }
