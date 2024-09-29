@@ -25,16 +25,14 @@
 									"type": "number"
 								}
 							}
-						},
-						"required": ["x", "y"]
+						}
 					}
 				},
 				"fits": {
 					"description": "an object that will contain the fits data",
 					"type": "any"
 				}
-			},
-			"required": ["measures"]
+			}
 		}
 	},
 	"required": ["displayedData"]

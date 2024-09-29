@@ -286,7 +286,9 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 
 						// allow .py script to filter everything without considering it as an error
 						// do not increment the number of participation
-						if ($experiment_data['visualizations'][$visualization_index]['displayedData'] === null){
+						if ($experiment_data['visualizations'][$visualization_index]['displayedData'] === null
+							|| $experiment_data['visualizations'][$visualization_index]['displayedData'] === []
+						){
 							$experiment_data['visualizations'][$visualization_index]['displayedData'] = [];
 							$visualization_index += 1;
 							continue ;
