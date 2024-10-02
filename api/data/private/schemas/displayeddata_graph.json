@@ -9,24 +9,7 @@
 			"properties": {
 				"measures": {
 					"description": "an array containing every received data",
-					"type": "array",
-					"items": {
-						"type": "object",
-						"properties": {
-							"x": {
-								"type": "array",
-								"items": {
-									"type": "number"
-								}
-							},
-							"y": {
-								"type": "array",
-								"items": {
-									"type": "number"
-								}
-							}
-						}
-					}
+					"type": "any"
 				},
 				"fits": {
 					"description": "an object that will contain the fits data",

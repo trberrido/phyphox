@@ -19,7 +19,7 @@ if ($py_output){
 		'version' 	=> $py_output,
 		'numpy'		=> $numpy_version,
 		'notes'		=> 'Use the "import json" and, if installed, "import numpy" commands on top of your script.',
-		'examples'	=> 'https://someexamples'
+		'examples'	=> 'https://github.com/frederic-bouquet/phyphox-dataviz-tools'
 	];
 }
 

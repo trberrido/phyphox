@@ -31,7 +31,7 @@ function script__exec(string $script_filename, mixed $data):mixed {
 	if ($exitcode){
 		if (!file_exists($stderr))
 			json__puterror(ERR_PY_NO_STDERR);
-		json__puterror(file_get_contents($stderr));
+		return null;
 	}
 
 	if (file_exists($stderr) && !filesize($stderr))

@@ -228,8 +228,11 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 									&& array_key_exists('x', $experiment_data['visualizations'][$visualization_index]['phyphoxData'][$phyphoxData_last_index])
 									&& array_key_exists('y', $experiment_data['visualizations'][$visualization_index]['phyphoxData'][$phyphoxData_last_index])){
 
-									if (!array_key_exists('measures', $experiment_data['visualizations'][$visualization_index]['displayedData'])){
+									if (!isset($experiment_data['visualizations'][$visualization_index]['displayedData']['measures'])){
 										$experiment_data['visualizations'][$visualization_index]['displayedData']['measures'] = [];
+									}
+
+									if (!isset($experiment_data['visualizations'][$visualization_index]['displayedData']['fits'])){
 										$experiment_data['visualizations'][$visualization_index]['displayedData']['fits'] = [];
 									}
 
@@ -290,6 +293,7 @@ if (strcmp($request['ressource'], 'current') == 0 && $is_applistening){
 							|| $experiment_data['visualizations'][$visualization_index]['displayedData'] === []
 						){
 							$experiment_data['visualizations'][$visualization_index]['displayedData'] = [];
+							$experiment_data['visualizations'][$visualization_index]['contributions_total'] -= 1;
 							$visualization_index += 1;
 							continue ;
 						}

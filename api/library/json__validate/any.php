@@ -1,5 +1,5 @@
 <?php
 
-function json__validate_any(array $data, array $schema): bool {
+function json__validate_any(mixed $data, array $schema): bool {
 	return true;
 }
